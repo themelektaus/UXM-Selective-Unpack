@@ -14,6 +14,13 @@ namespace UXM
     {
         private const int WRITE_LIMIT = 1024 * 1024 * 100;
 
+        public static bool Skip { get; private set; }
+
+        public static void SetSkip(bool skip)
+        {
+            Skip = skip;
+        }
+
         public static string Unpack(string exePath, IProgress<(double value, string status)> progress, CancellationToken ct)
         {
             progress.Report((0, "Preparing to unpack..."));
@@ -199,6 +206,9 @@ namespace UXM
                                 }
                                 else
                                 {
+                                    if (Skip)
+                                        continue;
+
                                     unknown = true;
                                     string filename = $"{archive}_{header.FileNameHash:D10}";
                                     string directory = $@"{gameDir}\_unknown";

@@ -248,5 +248,10 @@ namespace UXM
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
             }
         }
+
+        private void cbxSkip_CheckedChanged(object sender, EventArgs e)
+        {
+            ArchiveUnpacker.SetSkip(cbxSkip.Checked);
+        }
     }
 }

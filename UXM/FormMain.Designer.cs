@@ -46,6 +46,7 @@
             this.pbrProgress = new System.Windows.Forms.ProgressBar();
             this.ofdExe = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbxSkip = new System.Windows.Forms.CheckBox();
             lblBreak = new System.Windows.Forms.Label();
             lblExePath = new System.Windows.Forms.Label();
             lblStatus = new System.Windows.Forms.Label();
@@ -56,35 +57,39 @@
             lblBreak.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             lblBreak.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            lblBreak.Location = new System.Drawing.Point(-13, 85);
+            lblBreak.Location = new System.Drawing.Point(-20, 131);
+            lblBreak.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblBreak.Name = "lblBreak";
-            lblBreak.Size = new System.Drawing.Size(665, 2);
+            lblBreak.Size = new System.Drawing.Size(998, 3);
             lblBreak.TabIndex = 31;
             // 
             // lblExePath
             // 
             lblExePath.AutoSize = true;
-            lblExePath.Location = new System.Drawing.Point(12, 9);
+            lblExePath.Location = new System.Drawing.Point(18, 14);
+            lblExePath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExePath.Name = "lblExePath";
-            lblExePath.Size = new System.Drawing.Size(85, 13);
+            lblExePath.Size = new System.Drawing.Size(125, 20);
             lblExePath.TabIndex = 30;
             lblExePath.Text = "Executable Path";
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new System.Drawing.Point(12, 93);
+            lblStatus.Location = new System.Drawing.Point(18, 143);
+            lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new System.Drawing.Size(37, 13);
+            lblStatus.Size = new System.Drawing.Size(56, 20);
             lblStatus.TabIndex = 32;
             lblStatus.Text = "Status";
             // 
             // btnPatch
             // 
             this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPatch.Location = new System.Drawing.Point(392, 52);
+            this.btnPatch.Location = new System.Drawing.Point(588, 80);
+            this.btnPatch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnPatch.Name = "btnPatch";
-            this.btnPatch.Size = new System.Drawing.Size(75, 23);
+            this.btnPatch.Size = new System.Drawing.Size(112, 35);
             this.btnPatch.TabIndex = 27;
             this.btnPatch.Text = "Patch";
             this.btnPatch.UseVisualStyleBackColor = true;
@@ -93,9 +98,10 @@
             // btnUnpack
             // 
             this.btnUnpack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUnpack.Location = new System.Drawing.Point(311, 52);
+            this.btnUnpack.Location = new System.Drawing.Point(466, 80);
+            this.btnUnpack.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUnpack.Name = "btnUnpack";
-            this.btnUnpack.Size = new System.Drawing.Size(75, 23);
+            this.btnUnpack.Size = new System.Drawing.Size(112, 35);
             this.btnUnpack.TabIndex = 26;
             this.btnUnpack.Text = "Unpack";
             this.btnUnpack.UseVisualStyleBackColor = true;
@@ -104,9 +110,10 @@
             // btnRestore
             // 
             this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRestore.Location = new System.Drawing.Point(473, 52);
+            this.btnRestore.Location = new System.Drawing.Point(710, 80);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnRestore.Name = "btnRestore";
-            this.btnRestore.Size = new System.Drawing.Size(75, 23);
+            this.btnRestore.Size = new System.Drawing.Size(112, 35);
             this.btnRestore.TabIndex = 28;
             this.btnRestore.Text = "Restore";
             this.btnRestore.UseVisualStyleBackColor = true;
@@ -116,9 +123,10 @@
             // 
             this.btnAbort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAbort.Enabled = false;
-            this.btnAbort.Location = new System.Drawing.Point(554, 52);
+            this.btnAbort.Location = new System.Drawing.Point(831, 80);
+            this.btnAbort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAbort.Name = "btnAbort";
-            this.btnAbort.Size = new System.Drawing.Size(75, 23);
+            this.btnAbort.Size = new System.Drawing.Size(112, 35);
             this.btnAbort.TabIndex = 29;
             this.btnAbort.Text = "Abort";
             this.btnAbort.UseVisualStyleBackColor = true;
@@ -127,9 +135,10 @@
             // btnExplore
             // 
             this.btnExplore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExplore.Location = new System.Drawing.Point(554, 23);
+            this.btnExplore.Location = new System.Drawing.Point(831, 35);
+            this.btnExplore.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExplore.Name = "btnExplore";
-            this.btnExplore.Size = new System.Drawing.Size(75, 23);
+            this.btnExplore.Size = new System.Drawing.Size(112, 35);
             this.btnExplore.TabIndex = 25;
             this.btnExplore.Text = "Explore";
             this.btnExplore.UseVisualStyleBackColor = true;
@@ -138,9 +147,10 @@
             // btnBrowse
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Location = new System.Drawing.Point(473, 23);
+            this.btnBrowse.Location = new System.Drawing.Point(710, 35);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.Size = new System.Drawing.Size(112, 35);
             this.btnBrowse.TabIndex = 24;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -150,9 +160,10 @@
             // 
             this.txtExePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtExePath.Location = new System.Drawing.Point(12, 25);
+            this.txtExePath.Location = new System.Drawing.Point(18, 38);
+            this.txtExePath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtExePath.Name = "txtExePath";
-            this.txtExePath.Size = new System.Drawing.Size(455, 20);
+            this.txtExePath.Size = new System.Drawing.Size(680, 26);
             this.txtExePath.TabIndex = 23;
             this.txtExePath.Text = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\DARK SOULS III\\Game\\DarkSoulsIII.ex" +
     "e";
@@ -160,9 +171,10 @@
             // lblUpdate
             // 
             this.lblUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblUpdate.Location = new System.Drawing.Point(176, 167);
+            this.lblUpdate.Location = new System.Drawing.Point(264, 257);
+            this.lblUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpdate.Name = "lblUpdate";
-            this.lblUpdate.Size = new System.Drawing.Size(453, 13);
+            this.lblUpdate.Size = new System.Drawing.Size(680, 20);
             this.lblUpdate.TabIndex = 35;
             this.lblUpdate.Text = "Checking for update...";
             this.lblUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -170,9 +182,10 @@
             // llbUpdate
             // 
             this.llbUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.llbUpdate.Location = new System.Drawing.Point(179, 167);
+            this.llbUpdate.Location = new System.Drawing.Point(268, 257);
+            this.llbUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.llbUpdate.Name = "llbUpdate";
-            this.llbUpdate.Size = new System.Drawing.Size(450, 13);
+            this.llbUpdate.Size = new System.Drawing.Size(675, 20);
             this.llbUpdate.TabIndex = 36;
             this.llbUpdate.TabStop = true;
             this.llbUpdate.Text = "New version available!";
@@ -184,20 +197,22 @@
             // 
             this.txtStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtStatus.Location = new System.Drawing.Point(12, 109);
+            this.txtStatus.Location = new System.Drawing.Point(18, 168);
+            this.txtStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
-            this.txtStatus.Size = new System.Drawing.Size(617, 20);
+            this.txtStatus.Size = new System.Drawing.Size(924, 26);
             this.txtStatus.TabIndex = 33;
             // 
             // pbrProgress
             // 
             this.pbrProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbrProgress.Location = new System.Drawing.Point(12, 135);
+            this.pbrProgress.Location = new System.Drawing.Point(18, 208);
+            this.pbrProgress.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pbrProgress.Maximum = 1000;
             this.pbrProgress.Name = "pbrProgress";
-            this.pbrProgress.Size = new System.Drawing.Size(617, 23);
+            this.pbrProgress.Size = new System.Drawing.Size(926, 35);
             this.pbrProgress.TabIndex = 34;
             // 
             // ofdExe
@@ -206,11 +221,23 @@
             this.ofdExe.Filter = "Dark Souls Executable|*.exe";
             this.ofdExe.Title = "Select Dark Souls executable...";
             // 
+            // cbxSkip
+            // 
+            this.cbxSkip.AutoSize = true;
+            this.cbxSkip.Location = new System.Drawing.Point(18, 80);
+            this.cbxSkip.Name = "cbxSkip";
+            this.cbxSkip.Size = new System.Drawing.Size(166, 24);
+            this.cbxSkip.TabIndex = 37;
+            this.cbxSkip.Text = "Skip unknown files";
+            this.cbxSkip.UseVisualStyleBackColor = true;
+            this.cbxSkip.CheckedChanged += new System.EventHandler(this.cbxSkip_CheckedChanged);
+            // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 196);
+            this.ClientSize = new System.Drawing.Size(962, 274);
+            this.Controls.Add(this.cbxSkip);
             this.Controls.Add(this.llbUpdate);
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(lblStatus);
@@ -226,8 +253,9 @@
             this.Controls.Add(lblExePath);
             this.Controls.Add(this.lblUpdate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(2000, 234);
-            this.MinimumSize = new System.Drawing.Size(357, 234);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximumSize = new System.Drawing.Size(2989, 330);
+            this.MinimumSize = new System.Drawing.Size(524, 330);
             this.Name = "FormMain";
             this.Text = "UXM <version>";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
@@ -253,6 +281,7 @@
         private System.Windows.Forms.ProgressBar pbrProgress;
         private System.Windows.Forms.OpenFileDialog ofdExe;
         private System.Windows.Forms.ToolTip toolTip1;
+        public System.Windows.Forms.CheckBox cbxSkip;
     }
 }
 
