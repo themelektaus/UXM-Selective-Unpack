@@ -1,5 +1,5 @@
 
---| UXM 2.4
+--| UXM 2.6
 --| By TKGP
 --| https://www.nexusmods.com/sekiro/mods/26
 --| https://github.com/JKAnderson/UXM
@@ -41,6 +41,11 @@ https://github.com/maxhauser/semver
 
 
 --| Changelog
+2.6
+	Added support for launching UXM from the Windows Search menu.  
+
+2.5
+	Added "Skip unknown files" option. Allows user to delete files from the res/GameDictionary.txt to extract only specific files. I.E. Deleting all files except ones in the sound folder from ScholarDictionary.txt to only unpack the sounds.  
 
 2.4
 	Sekiro pre-order artbook/soundtrack thing support; just browse to DigitalArtwork_MiniSoundtrack.exe

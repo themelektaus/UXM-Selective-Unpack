@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace UXM
 {
+
     class GameInfo
     {
         public long RequiredGB;
@@ -16,6 +17,7 @@ namespace UXM
         public List<string> BackupDirs;
         public List<string> DeleteDirs;
         public List<string> Replacements;
+        private static readonly string ExeDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         public GameInfo(string xmlStr, string dictionaryStr)
         {
@@ -50,8 +52,8 @@ namespace UXM
             string gameInfo = File.ReadAllText($@"..\..\dist\res\{prefix}GameInfo.xml");
             string dictionary = File.ReadAllText($@"..\..\dist\res\{prefix}Dictionary.txt");
 #else
-            string gameInfo = File.ReadAllText($@"res\{prefix}GameInfo.xml");
-            string dictionary = File.ReadAllText($@"res\{prefix}Dictionary.txt");
+            string gameInfo = File.ReadAllText($@"{ExeDir}\res\{prefix}GameInfo.xml");
+            string dictionary = File.ReadAllText($@"{ExeDir}\res\{prefix}Dictionary.txt");
 #endif
             return new GameInfo(gameInfo, dictionary);
         }
