@@ -42,7 +42,8 @@ https://github.com/maxhauser/semver
 
 --| Changelog
 2.6
-	Added support for launching UXM from the Windows Search menu.  
+	Added support for launching UXM from the Windows Search menu.   
+	Added updated Sekiro Dictionary that TKGP posted in ?ServerName?  
 
 2.5
 	Added "Skip unknown files" option. Allows user to delete files from the res/GameDictionary.txt to extract only specific files. I.E. Deleting all files except ones in the sound folder from ScholarDictionary.txt to only unpack the sounds.  
