@@ -46,7 +46,7 @@ https://github.com/maxhauser/semver
 	Added updated Sekiro Dictionary that TKGP posted in ?ServerName?  
 
 2.5
-	Added "Skip unknown files" option. Allows user to delete files from the res/GameDictionary.txt to extract only specific files. I.E. Deleting all files except ones in the sound folder from ScholarDictionary.txt to only unpack the sounds.  
+	Added "Skip unknown files" option. Allows user to delete files from the res/GameDictionary.txt to extract only specific files. I.E. Deleting all files except ones in the sound folder from ScholarDictionary.txt to only unpack the sounds for Dark Souls 2 SotFS.  
 
 2.4
 	Sekiro pre-order artbook/soundtrack thing support; just browse to DigitalArtwork_MiniSoundtrack.exe
