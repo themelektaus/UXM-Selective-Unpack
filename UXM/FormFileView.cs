@@ -24,9 +24,10 @@ namespace UXM
         {
             InitializeComponent();
             Parent = parent;
-            fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
+            if (currentNodes.Nodes.Count > 0)
+                fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
         }
-        
+
 
 
         public static void PopulateTreeview(string exePath)
@@ -145,7 +146,8 @@ namespace UXM
             AddSelectedFiles(fileTreeView.Nodes);
             currentNodes.Nodes.Clear();
             Parent.cbxSkip.Checked = SelectedFiles.Any();
-            currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
+            if (fileTreeView.Nodes.Count > 0)
+                currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
             Close();
         }
 
