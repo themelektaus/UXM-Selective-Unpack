@@ -47,6 +47,7 @@
             this.ofdExe = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cbxSkip = new System.Windows.Forms.CheckBox();
+            this.btnFileView = new System.Windows.Forms.Button();
             lblBreak = new System.Windows.Forms.Label();
             lblExePath = new System.Windows.Forms.Label();
             lblStatus = new System.Windows.Forms.Label();
@@ -167,6 +168,7 @@
             this.txtExePath.TabIndex = 23;
             this.txtExePath.Text = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\DARK SOULS III\\Game\\DarkSoulsIII.ex" +
     "e";
+            this.txtExePath.TextChanged += new System.EventHandler(this.txtExePath_TextChanged);
             // 
             // lblUpdate
             // 
@@ -224,19 +226,31 @@
             // cbxSkip
             // 
             this.cbxSkip.AutoSize = true;
-            this.cbxSkip.Location = new System.Drawing.Point(18, 80);
+            this.cbxSkip.Location = new System.Drawing.Point(18, 86);
             this.cbxSkip.Name = "cbxSkip";
-            this.cbxSkip.Size = new System.Drawing.Size(166, 24);
+            this.cbxSkip.Size = new System.Drawing.Size(168, 24);
             this.cbxSkip.TabIndex = 37;
-            this.cbxSkip.Text = "Skip unknown files";
+            this.cbxSkip.Text = "Use Selected Files";
             this.cbxSkip.UseVisualStyleBackColor = true;
             this.cbxSkip.CheckedChanged += new System.EventHandler(this.cbxSkip_CheckedChanged);
+            // 
+            // btnFileView
+            // 
+            this.btnFileView.Location = new System.Drawing.Point(191, 80);
+            this.btnFileView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnFileView.Name = "btnFileView";
+            this.btnFileView.Size = new System.Drawing.Size(112, 35);
+            this.btnFileView.TabIndex = 38;
+            this.btnFileView.Text = "View Files";
+            this.btnFileView.UseVisualStyleBackColor = true;
+            this.btnFileView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 274);
+            this.Controls.Add(this.btnFileView);
             this.Controls.Add(this.cbxSkip);
             this.Controls.Add(this.llbUpdate);
             this.Controls.Add(this.txtStatus);
@@ -255,7 +269,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximumSize = new System.Drawing.Size(2989, 330);
-            this.MinimumSize = new System.Drawing.Size(524, 330);
+            this.MinimumSize = new System.Drawing.Size(984, 330);
             this.Name = "FormMain";
             this.Text = "UXM <version>";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
@@ -282,6 +296,7 @@
         private System.Windows.Forms.OpenFileDialog ofdExe;
         private System.Windows.Forms.ToolTip toolTip1;
         public System.Windows.Forms.CheckBox cbxSkip;
+        private System.Windows.Forms.Button btnFileView;
     }
 }
 

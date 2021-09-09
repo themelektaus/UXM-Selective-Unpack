@@ -1,5 +1,4 @@
 ﻿using Microsoft.WindowsAPICodePack.Taskbar;
-using Semver;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -45,8 +44,8 @@ namespace UXM
             Octokit.GitHubClient gitHubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("UXM"));
             try
             {
-                Octokit.Release release = await gitHubClient.Repository.Release.GetLatest("JKAnderson", "UXM");
-                if (SemVersion.Parse(release.TagName) > Application.ProductVersion)
+                Octokit.Release release = await gitHubClient.Repository.Release.GetLatest("Nordgaren", "UXM");
+                if (Version.Parse(release.TagName) > Version.Parse(Application.ProductVersion))
                 {
                     lblUpdate.Visible = false;
                     LinkLabel.Link link = new LinkLabel.Link();
@@ -63,6 +62,8 @@ namespace UXM
             {
                 lblUpdate.Text = "Update status unknown";
             }
+
+            FormFileView.PopulateTreeview(txtExePath.Text);
         }
 
         private void llbUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -252,6 +253,18 @@ namespace UXM
         private void cbxSkip_CheckedChanged(object sender, EventArgs e)
         {
             ArchiveUnpacker.SetSkip(cbxSkip.Checked);
+        }
+
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            var FormFileView = new FormFileView(this);
+            FormFileView.Show();
+        }
+
+        private void txtExePath_TextChanged(object sender, EventArgs e)
+        {
+            FormFileView.PopulateTreeview(txtExePath.Text);
         }
     }
 }

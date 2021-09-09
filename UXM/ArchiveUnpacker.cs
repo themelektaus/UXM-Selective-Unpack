@@ -38,6 +38,9 @@ namespace UXM
                 return ex.Message;
             }
 
+            if (FormFileView.SelectedFiles.Any() && Skip)
+                gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles));
+
             Dictionary<string, string> keys = null;
             if (game == Util.Game.DarkSouls2 || game == Util.Game.Scholar)
             {
