@@ -25,6 +25,9 @@ UXM only edits data within the executable, not code, so anticheat should have no
 [Semver](https://github.com/maxhauser/semver) by Max Hauser
 
 # Changelog
+### 2.7
+* Added GUI for selective file unpacking  
+
 ### 2.6
 * Added support for launching UXM from the Windows Search menu.  
 * Added updated Sekiro Dictionary that TKGP posted in ?ServerName?  

@@ -41,6 +41,8 @@ https://github.com/maxhauser/semver
 
 
 --| Changelog
+2.7
+	Added GUI for selective file unpacking  
 2.6
 	Added support for launching UXM from the Windows Search menu.   
 	Added updated Sekiro Dictionary that TKGP posted in ?ServerName?  
@@ -81,3 +83,11 @@ https://github.com/maxhauser/semver
 	Patching and restoring now also display progress and are abortable
 	Fixed some misidentified files in DS3 and identified 1 new one
 	
+
+	Hello! I'm currently following your tutorial on building the simple EQ. I am trying to get the response curve the peak filter to draw, but it just won't. I have triple checked the video and the code.
+
+I think it may have to do with the EQs destructor being called constantly or something? I don't know. I have noticed if I put a breakpoint there, it does get called often, although that could just be some kind of optimization for when the app isn't on screen or something.
+
+I am using the latest version of JUCE, as far as I know (When I fetch from the JUCE repo, I get no updates.)
+
+Any help would be appreciated.
