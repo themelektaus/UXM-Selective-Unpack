@@ -144,8 +144,8 @@ namespace UXM
         {
             SelectedFiles.Clear();
             AddSelectedFiles(fileTreeView.Nodes);
+            Parent.SetSkip(SelectedFiles.Any());
             currentNodes.Nodes.Clear();
-            Parent.cbxSkip.Checked = SelectedFiles.Any();
             if (fileTreeView.Nodes.Count > 0)
                 currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
             Close();

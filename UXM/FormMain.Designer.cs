@@ -226,7 +226,7 @@
             // cbxSkip
             // 
             this.cbxSkip.AutoSize = true;
-            this.cbxSkip.Location = new System.Drawing.Point(18, 86);
+            this.cbxSkip.Location = new System.Drawing.Point(137, 86);
             this.cbxSkip.Name = "cbxSkip";
             this.cbxSkip.Size = new System.Drawing.Size(168, 24);
             this.cbxSkip.TabIndex = 37;
@@ -236,7 +236,7 @@
             // 
             // btnFileView
             // 
-            this.btnFileView.Location = new System.Drawing.Point(191, 80);
+            this.btnFileView.Location = new System.Drawing.Point(18, 80);
             this.btnFileView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFileView.Name = "btnFileView";
             this.btnFileView.Size = new System.Drawing.Size(112, 35);
@@ -295,7 +295,7 @@
         private System.Windows.Forms.ProgressBar pbrProgress;
         private System.Windows.Forms.OpenFileDialog ofdExe;
         private System.Windows.Forms.ToolTip toolTip1;
-        public System.Windows.Forms.CheckBox cbxSkip;
+        private System.Windows.Forms.CheckBox cbxSkip;
         private System.Windows.Forms.Button btnFileView;
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Media;
 using System.Net.Http;
 using System.Threading;
@@ -62,7 +63,6 @@ namespace UXM
             {
                 lblUpdate.Text = "Update status unknown";
             }
-
             FormFileView.PopulateTreeview(txtExePath.Text);
         }
 
@@ -268,5 +268,11 @@ namespace UXM
         {
             FormFileView.PopulateTreeview(txtExePath.Text);
         }
+
+        public void SetSkip(bool enable)
+        {
+            cbxSkip.Checked = enable;
+        }
+
     }
 }
