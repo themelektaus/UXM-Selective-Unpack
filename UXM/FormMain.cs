@@ -259,7 +259,9 @@ namespace UXM
         private void btnView_Click(object sender, EventArgs e)
         {
             var FormFileView = new FormFileView(this);
-            FormFileView.Show();
+            Enabled = false;
+            FormFileView.ShowDialog();
+            Enabled = true;
         }
 
         private void txtExePath_TextChanged(object sender, EventArgs e)
