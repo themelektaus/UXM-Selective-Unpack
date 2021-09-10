@@ -77,20 +77,38 @@ namespace UXM
 
         private void fileTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            try
+            if (e.Action == TreeViewAction.ByMouse)
             {
-                e.Node.TreeView.BeginUpdate();
-                if (e.Node.Nodes.Count > 0)
+                try
                 {
-                    var parentNode = e.Node;
-                    var nodes = e.Node.Nodes;
-                    CheckedOrUnCheckedNodes(parentNode, nodes);
+                    e.Node.TreeView.BeginUpdate();
+                    if (e.Node.Nodes.Count > 0)
+                    {
+                        var parentNode = e.Node;
+                        var nodes = e.Node.Nodes;
+                        CheckedOrUnCheckedNodes(parentNode, nodes);
+                    }
+                }
+                finally
+                {
+                    e.Node.TreeView.EndUpdate();
                 }
             }
-            finally
+
+            if (!e.Node.Checked)
             {
-                e.Node.TreeView.EndUpdate();
+                if (e.Node.Parent != null)
+                    UncheckParent(e.Node.Parent);
             }
+
+        }
+
+        private void UncheckParent(TreeNode parentNode)
+        {
+            parentNode.Checked = false;
+
+            if (parentNode.Parent != null)
+                UncheckParent(parentNode.Parent);
         }
 
         private void CheckedOrUnCheckedNodes(TreeNode parentNode, TreeNodeCollection nodes)
