@@ -41,6 +41,8 @@ https://github.com/maxhauser/semver
 
 
 --| Changelog
+2.7.1
+	File selection GUI uncheck parents when child node unchecked 
 2.7
 	Added GUI for selective file unpacking  
 2.6

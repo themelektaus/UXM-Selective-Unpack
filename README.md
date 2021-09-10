@@ -25,6 +25,9 @@ UXM only edits data within the executable, not code, so anticheat should have no
 [Semver](https://github.com/maxhauser/semver) by Max Hauser
 
 # Changelog
+### 2.7.1
+* File selection GUI uncheck parents when child node unchecked  
+
 ### 2.7
 * Added GUI for selective file unpacking  
 
