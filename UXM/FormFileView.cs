@@ -18,7 +18,7 @@ namespace UXM
 
         private static TreeView currentNodes = new TreeView();
 
-        private FormMain Parent;
+        private new FormMain Parent;
 
         public FormFileView(FormMain parent)
         {
@@ -124,35 +124,14 @@ namespace UXM
 
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
-            
-            CheckAllNodes(fileTreeView.Nodes, true);
+            fileTreeView.Nodes[0].Checked = true;
+            CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            CheckAllNodes(fileTreeView.Nodes, false);
-        }
-
-        public void CheckAllNodes(TreeNodeCollection nodes, bool isChecked)
-        {
-            nodes[0].TreeView.BeginUpdate();
-            foreach (TreeNode node in nodes)
-            {
-                node.Checked = isChecked;
-                if (node.Nodes.Count > 0)
-                    CheckChildren(node, isChecked);
-            }
-            nodes[0].TreeView.EndUpdate();
-        }
-
-        private void CheckChildren(TreeNode rootNode, bool isChecked)
-        {
-            foreach (TreeNode node in rootNode.Nodes)
-            {
-                if (node.Nodes.Count > 0)
-                    CheckChildren(node, isChecked);
-                node.Checked = isChecked;
-            }
+            fileTreeView.Nodes[0].Checked = false;
+            CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
         }
 
         public static List<string> SelectedFiles = new List<string>();
