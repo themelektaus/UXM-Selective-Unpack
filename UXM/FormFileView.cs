@@ -77,7 +77,7 @@ namespace UXM
 
         private void fileTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            if (e.Action == TreeViewAction.ByMouse)
+            if (e.Action == TreeViewAction.ByMouse || e.Action == TreeViewAction.ByKeyboard)
             {
                 try
                 {
@@ -88,19 +88,18 @@ namespace UXM
                         var nodes = e.Node.Nodes;
                         CheckedOrUnCheckedNodes(parentNode, nodes);
                     }
+
+                    if (!e.Node.Checked)
+                    {
+                        if (e.Node.Parent != null)
+                            UncheckParent(e.Node.Parent);
+                    }
                 }
                 finally
                 {
                     e.Node.TreeView.EndUpdate();
                 }
             }
-
-            if (!e.Node.Checked)
-            {
-                if (e.Node.Parent != null)
-                    UncheckParent(e.Node.Parent);
-            }
-
         }
 
         private void UncheckParent(TreeNode parentNode)
