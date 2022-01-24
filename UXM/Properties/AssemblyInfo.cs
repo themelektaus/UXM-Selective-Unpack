@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UXM")]
+[assembly: AssemblyTitle("UXM Selective Unpack")]
 [assembly: AssemblyDescription("Enables file modding for Dark Souls 2, Scholar of the First Sin, Dark Souls 3, and Sekiro.")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
