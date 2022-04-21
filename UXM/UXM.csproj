@@ -133,6 +133,9 @@
     <Content Include="dist\res\DarkSouls2GameInfo.xml" />
     <Content Include="dist\res\DarkSouls3Dictionary.txt" />
     <Content Include="dist\res\DarkSouls3GameInfo.xml" />
+    <Content Include="dist\res\EldenRingDictionaryBak.txt" />
+    <Content Include="dist\res\EldenRingDictionary.txt" />
+    <Content Include="dist\res\EldenRingGameInfo.xml" />
     <Content Include="dist\res\ScholarDictionary.txt" />
     <Content Include="dist\res\ScholarGameInfo.xml" />
     <Content Include="dist\res\SekiroBonusDictionary.txt" />

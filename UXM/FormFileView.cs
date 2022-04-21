@@ -43,10 +43,10 @@ namespace UXM
             Prefix = GameInfo.GetPrefix(game);
 
 #if DEBUG
-            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").ToArray();
+            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
 
 #else
-            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").ToArray();
+            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
 #endif
             currentNodes.Nodes.Add(PopulateTreeNode2(fileList, @"/", Prefix));
         }
@@ -64,7 +64,7 @@ namespace UXM
                 currentnode = thisnode;
                 foreach (string subPath in path.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    if (null == currentnode.Nodes[subPath])
+                    if (currentnode.Nodes[subPath] == null)
                         currentnode = currentnode.Nodes.Add(subPath, subPath);
                     else
                         currentnode = currentnode.Nodes[subPath];
