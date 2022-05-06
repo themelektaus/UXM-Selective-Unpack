@@ -25,6 +25,9 @@ UXM only edits data within the executable, not code, so anticheat should have no
 [Semver](https://github.com/maxhauser/semver) by Max Hauser
 
 # Changelog
+### 1.69
+* Elden ring support and improved the file picking window slightly.  
+
 ### 2.7.1
 * File selection GUI uncheck parents when child node unchecked  
 

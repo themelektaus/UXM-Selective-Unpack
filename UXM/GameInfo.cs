@@ -19,10 +19,9 @@ namespace UXM
         public List<string> Replacements;
         public static readonly string ExeDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-        public GameInfo(string xmlStr, string dictionaryStr)
+        public GameInfo(string xmlStr, string dictionaryStr, Util.Game game)
         {
-            Dictionary = new ArchiveDictionary(dictionaryStr);
-
+            Dictionary = new ArchiveDictionary(dictionaryStr, game);
             XDocument xml = XDocument.Parse(xmlStr);
             RequiredGB = long.Parse(xml.Root.Element("required_gb").Value);
             BHD5Game = (BHD5.Game)Enum.Parse(typeof(BHD5.Game), xml.Root.Element("bhd5_game").Value);
@@ -34,6 +33,7 @@ namespace UXM
 
         public static GameInfo GetGameInfo(Util.Game game)
         {
+
             string prefix = GetPrefix(game);
 
 #if DEBUG
@@ -43,7 +43,7 @@ namespace UXM
             string gameInfo = File.ReadAllText($@"{ExeDir}\res\{prefix}GameInfo.xml");
             string dictionary = File.ReadAllText($@"{ExeDir}\res\{prefix}Dictionary.txt");
 #endif
-            return new GameInfo(gameInfo, dictionary);
+            return new GameInfo(gameInfo, dictionary, game);
         }
 
         public static string GetPrefix(Util.Game game)

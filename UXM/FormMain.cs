@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace UXM
 {
@@ -63,7 +64,20 @@ namespace UXM
             {
                 lblUpdate.Text = "Update status unknown";
             }
-            FormFileView.PopulateTreeview(txtExePath.Text);
+            await GetTreeView();
+        }
+
+        public async Task GetTreeView()
+        {
+            await Dispatcher.CurrentDispatcher.Invoke(async () =>
+            {
+                btnFileView.Enabled = false;
+                btnFileView.Text = "Loading";
+                await Task.Run(() => FormFileView.PopulateTreeview(txtExePath.Text));
+                btnFileView.Text = "View Files";
+                btnFileView.Enabled = true;
+            });
+     
         }
 
         private void llbUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -255,7 +269,6 @@ namespace UXM
             ArchiveUnpacker.SetSkip(cbxSkip.Checked);
         }
 
-
         private void btnView_Click(object sender, EventArgs e)
         {
             var FormFileView = new FormFileView(this);
@@ -264,9 +277,12 @@ namespace UXM
             Enabled = true;
         }
 
-        private void txtExePath_TextChanged(object sender, EventArgs e)
+        private async void txtExePath_TextChanged(object sender, EventArgs e)
         {
-            FormFileView.PopulateTreeview(txtExePath.Text);
+            await Dispatcher.CurrentDispatcher.Invoke(async () =>
+            {
+                await GetTreeView();
+            });
         }
 
         public void SetSkip(bool enable)

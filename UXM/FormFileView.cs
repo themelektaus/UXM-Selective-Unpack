@@ -28,8 +28,6 @@ namespace UXM
                 fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
         }
 
-
-
         public static void PopulateTreeview(string exePath)
         {
             Util.Game game;
@@ -43,7 +41,7 @@ namespace UXM
             Prefix = GameInfo.GetPrefix(game);
 
 #if DEBUG
-            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
+            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
 #else
             var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
@@ -59,10 +57,20 @@ namespace UXM
             TreeNode thisnode = new TreeNode(prefix);
             TreeNode currentnode;
             char[] cachedpathseparator = pathSeparator.ToCharArray();
-            foreach (string path in paths)
+            bool sound = false;
+
+            for (int i = 0; i < paths.Length; i++)
             {
+                if (paths[i] == "#sd")
+                    sound = true;
+
+                if (paths[i].StartsWith("#"))
+                    continue;
+
+                if (sound)
+                    paths[i] = $"/sound/{paths[i]}";
                 currentnode = thisnode;
-                foreach (string subPath in path.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode.Nodes[subPath] == null)
                         currentnode = currentnode.Nodes.Add(subPath, subPath);

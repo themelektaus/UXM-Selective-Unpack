@@ -39,7 +39,7 @@ namespace UXM
             }
 
             if (FormFileView.SelectedFiles.Any() && Skip)
-                gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles));
+                gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles), game);
 
             Dictionary<string, string> keys = null;
             if (game == Util.Game.DarkSouls2 || game == Util.Game.Scholar)
@@ -69,6 +69,10 @@ namespace UXM
             else if (game == Util.Game.SekiroBonus)
             {
                 keys = ArchiveKeys.SekiroBonusKeys;
+            }
+            else if (game == Util.Game.EldenRing)
+            {
+                keys = ArchiveKeys.EldenRingKeys;
             }
 
             string drive = Path.GetPathRoot(Path.GetFullPath(gameDir));
@@ -125,6 +129,7 @@ namespace UXM
                     return null;
 
                 string archive = gameInfo.Archives[i];
+
                 string error = UnpackArchive(gameDir, archive, keys[archive], i,
                     gameInfo.Archives.Count, gameInfo.BHD5Game, gameInfo.Dictionary, progress, ct).Result;
                 if (error != null)
@@ -197,13 +202,16 @@ namespace UXM
                                     break;
 
                                 currentFile++;
-
                                 string path;
                                 bool unknown;
                                 if (archiveDictionary.GetPath(header.FileNameHash, out path))
                                 {
                                     unknown = false;
+                                    if (archive == @"sd\sd")
+                                        path = $"/sound/{path}";
+
                                     path = gameDir + path.Replace('/', '\\');
+                                    
                                     if (File.Exists(path))
                                         continue;
                                 }
