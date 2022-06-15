@@ -16,15 +16,17 @@ Finally, the Restore button will restore the original executable and delete the 
 UXM only edits data within the executable, not code, so anticheat should have no effect on it. File mods in general have never been grounds for a ban in any of the Souls games, but mods that alter your save may not be safe, so please consult your mod author's advice and play offline if using anything dubious.
 
 # Credits
-[Meowmaritus](https://github.com/Meowmaritus) for Elden Ring compatibility
+[TKGP](https://github.com/JKAnderson) original Author  
 
-[BinderTool](https://github.com/Atvaark/BinderTool) by Atvaark
+[Meowmaritus](https://github.com/Meowmaritus) for Elden Ring compatibility  
 
-[Costura.Fody](https://github.com/Fody/Costura) by Simon Cropp, Cameron MacFarland
+[BinderTool](https://github.com/Atvaark/BinderTool) by Atvaark  
 
-[Octokit](https://github.com/octokit/octokit.net) by GitHub
+[Costura.Fody](https://github.com/Fody/Costura) by Simon Cropp, Cameron MacFarland  
 
-[Semver](https://github.com/maxhauser/semver) by Max Hauser
+[Octokit](https://github.com/octokit/octokit.net) by GitHub  
+
+[Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog
 ### 1.69
