@@ -15,6 +15,9 @@ Finally, the Restore button will restore the original executable and delete the 
 # Bannability
 UXM only edits data within the executable, not code, so anticheat should have no effect on it. File mods in general have never been grounds for a ban in any of the Souls games, but mods that alter your save may not be safe, so please consult your mod author's advice and play offline if using anything dubious.
 
+Elden Ring
+You cannot play online with an modified exe, so you cannot go online with an unpacked game (Nor can you go online with Mod Engine 2)  
+
 # Credits
 [TKGP](https://github.com/JKAnderson) original Author  
 
