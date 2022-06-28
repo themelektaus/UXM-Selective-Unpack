@@ -42,11 +42,10 @@ namespace UXM
                 WindowState = FormWindowState.Maximized;
 
             txtExePath.Text = settings.ExePath;
-
-            Octokit.GitHubClient gitHubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("UXM"));
+            Octokit.GitHubClient gitHubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("UXM-Selective-Unpack"));
             try
             {
-                Octokit.Release release = await gitHubClient.Repository.Release.GetLatest("Nordgaren", "UXM");
+                Octokit.Release release = await gitHubClient.Repository.Release.GetLatest("Nordgaren", "UXM-Selective-Unpack");
                 if (Version.Parse(release.TagName) > Version.Parse(Application.ProductVersion))
                 {
                     lblUpdate.Visible = false;
