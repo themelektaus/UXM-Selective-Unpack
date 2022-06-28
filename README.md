@@ -1,7 +1,7 @@
 # UXM
 Enables file modding for DS2, SotFS, DS3, Sekiro and Elden Ring by unpacking game archives and patching the executable to load loose files instead.  
 Requires [.NET 4.7.2](https://www.microsoft.com/net/download/thank-you/net472) - Windows 10 users should already have this.  
-[Nexus Page](https://www.nexusmods.com/sekiro/mods/26)  
+[Nexus Page](https://www.nexusmods.com/eldenring/mods/1651)  
 
 # Usage
 When first starting the app, the default Steam location of Sekiro will be selected. If the game you want is installed somewhere else, use the Browse button to correct it.
@@ -15,14 +15,21 @@ Finally, the Restore button will restore the original executable and delete the 
 # Bannability
 UXM only edits data within the executable, not code, so anticheat should have no effect on it. File mods in general have never been grounds for a ban in any of the Souls games, but mods that alter your save may not be safe, so please consult your mod author's advice and play offline if using anything dubious.
 
+Elden Ring
+You cannot play online with an modified exe, so you cannot go online with an unpacked game (Nor can you go online with Mod Engine 2)  
+
 # Credits
-[BinderTool](https://github.com/Atvaark/BinderTool) by Atvaark
+[TKGP](https://github.com/JKAnderson) original Author  
 
-[Costura.Fody](https://github.com/Fody/Costura) by Simon Cropp, Cameron MacFarland
+[Meowmaritus](https://github.com/Meowmaritus) for Elden Ring compatibility  
 
-[Octokit](https://github.com/octokit/octokit.net) by GitHub
+[BinderTool](https://github.com/Atvaark/BinderTool) by Atvaark  
 
-[Semver](https://github.com/maxhauser/semver) by Max Hauser
+[Costura.Fody](https://github.com/Fody/Costura) by Simon Cropp, Cameron MacFarland  
+
+[Octokit](https://github.com/octokit/octokit.net) by GitHub  
+
+[Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog
 ### 1.69.420
