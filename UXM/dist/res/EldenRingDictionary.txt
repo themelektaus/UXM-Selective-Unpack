@@ -80439,6 +80439,7 @@
 /enus/cs_c4493.bnk
 /enus/cs_c4604.bnk
 /enus/cs_c4690.bnk
+/cs_c4690.bnk
 /enus/cs_c4720.bnk
 /enus/cs_c4721.bnk
 /enus/cs_c4750.bnk
@@ -80532,6 +80533,7 @@
 /enus/vc800.bnk
 /enus/vc801.bnk
 /enus/vcmain.bnk
+/wem/16/161168761.wem
 /enus/wem/10/1000033827.wem
 /enus/wem/10/1000238812.wem
 /enus/wem/10/1000275262.wem
@@ -81593,7 +81595,7 @@
 /enus/wem/16/169860848.wem
 /enus/wem/16/169861477.wem
 /enus/wem/16/169867706.wem
-/enus/wem/16/169896283.wem
+/enus/wem/16/169896283.wem#s
 /enus/wem/17/170628359.wem
 /enus/wem/17/17067188.wem
 /enus/wem/17/17076787.wem
@@ -82064,6 +82066,7 @@
 /enus/wem/22/227577310.wem
 /enus/wem/22/227577549.wem
 /enus/wem/22/227773596.wem
+/enus/wem/22/227838361.wem
 /enus/wem/22/227884155.wem
 /enus/wem/22/227951760.wem
 /enus/wem/22/227998957.wem

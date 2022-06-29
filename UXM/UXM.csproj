@@ -170,6 +170,8 @@ if "$(ConfigurationName)" == "Release" (
   md "%25output%25"
   del "%25output%25"
   xcopy "$(ProjectDir)dist\*.*" "%25output%25" /Y /I /E
+  copy "$(SolutionDir)\README.md" "%25output%25\" 
+  ren "%25output%25\README.md" "README.txt"  
   copy "$(TargetPath)" "%25output%25\"
   copy "$(TargetPath).config" "%25output%25\"
   copy "$(TargetDir)$(TargetName).pdb" "%25output%25\"

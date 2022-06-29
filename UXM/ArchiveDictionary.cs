@@ -33,7 +33,7 @@ namespace UXM
             if (!hashable.StartsWith("/"))
                 hashable = '/' + hashable;
 
-            return game == Util.Game.EldenRing ? hashable.Aggregate(0u, (ulong i, char c) => i * 0x85ul + c) : (uint)hashable.Aggregate(0u, (ulong i, char c) => i * PRIME + c);
+            return game == Util.Game.EldenRing ? hashable.Aggregate(0ul, (i,c) => i * 0x85ul + c) : hashable.Aggregate(0u, (i,c) => i * PRIME + c);
         }
 
         public bool GetPath(ulong hash, out string path)

@@ -211,7 +211,7 @@ namespace UXM
                                         path = $"/sound/{path}";
 
                                     path = gameDir + path.Replace('/', '\\');
-                                    
+
                                     if (File.Exists(path))
                                         continue;
                                 }
@@ -221,9 +221,10 @@ namespace UXM
                                         continue;
 
                                     unknown = true;
-                                    string filename = $"{archive}_{header.FileNameHash:D10}";
+                                    string filename = $"{archive.Split('\\')[0]}_{header.FileNameHash:D10}";
                                     string directory = $@"{gameDir}\_unknown";
                                     path = $@"{directory}\{filename}";
+
                                     if (File.Exists(path) || Directory.Exists(directory) && Directory.GetFiles(directory, $"{filename}.*").Length > 0)
                                         continue;
                                 }
