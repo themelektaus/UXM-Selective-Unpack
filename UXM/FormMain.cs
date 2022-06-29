@@ -32,7 +32,7 @@ namespace UXM
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-            Text = "UXM " + Application.ProductVersion;
+            Text = $"UXM {Application.ProductVersion} Selective Unpacker";
             EnableControls(true);
 
             Location = settings.WindowLocation;
