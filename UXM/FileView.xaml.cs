@@ -166,25 +166,25 @@ namespace UXM
             ItemFilter = "";
         }
 
-        private void Show_Click(object sender, RoutedEventArgs e)
-        {
-            List<string> list = new List<string>();
+        //private void Show_Click(object sender, RoutedEventArgs e)
+        //{
+        //    List<string> list = new List<string>();
 
-            void Get(TreeNode nodes)
-            {
-                foreach (var node in nodes.Nodes)
-                {
-                    if (node.Nodes.Count > 0)
-                        Get(node);
-                    else
-                        if (node.Selected) list.Add(node.FullPath);
+        //    void Get(TreeNode nodes)
+        //    {
+        //        foreach (var node in nodes.Nodes)
+        //        {
+        //            if (node.Nodes.Count > 0)
+        //                Get(node);
+        //            else
+        //                if (node.Selected) list.Add(node.FullPath);
 
-                }
-            }
+        //        }
+        //    }
 
-            Get(TreeNodesCollection[0]);
-            MessageBox.Show(list[0]);
-        }
+        //    Get(TreeNodesCollection[0]);
+        //    MessageBox.Show(list[0]);
+        //}
 
         FormFileView Parent { get; set; }
         internal void SetParent(FormFileView formFileView)

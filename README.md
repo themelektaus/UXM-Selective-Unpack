@@ -36,6 +36,7 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 # Changelog  
 ### 1.71
 * Search bar in file view.  
+* Fixed bug with ER Sound files.  
 
 ### 1.70 - The "No More Funny Numbers" Update  
 * Small code change to be more accurate to the original UXM code, while still getting the correct values.  
