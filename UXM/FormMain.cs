@@ -28,6 +28,7 @@ namespace UXM
             closing = false;
             cts = null;
             progress = new Progress<(double value, string status)>(ReportProgress);
+            formFileView = new FormFileView(this);
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -63,7 +64,6 @@ namespace UXM
             {
                 lblUpdate.Text = "Update status unknown";
             }
-            await GetTreeView();
         }
 
         public async Task GetTreeView()
@@ -72,7 +72,7 @@ namespace UXM
             {
                 btnFileView.Enabled = false;
                 btnFileView.Text = "Loading";
-                await Task.Run(() => FormFileView.PopulateTreeview(txtExePath.Text));
+                await Task.Run(() => formFileView.PopulateTreeview(txtExePath.Text));
                 btnFileView.Text = "View Files";
                 btnFileView.Enabled = true;
             });
@@ -268,11 +268,12 @@ namespace UXM
             ArchiveUnpacker.SetSkip(cbxSkip.Checked);
         }
 
+        private FormFileView formFileView { get; set; }
+
         private void btnView_Click(object sender, EventArgs e)
         {
-            var FormFileView = new FormFileView(this);
             Enabled = false;
-            FormFileView.ShowDialog();
+            formFileView.ShowDialog();
             Enabled = true;
         }
 

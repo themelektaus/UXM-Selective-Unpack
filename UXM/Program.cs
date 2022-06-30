@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Windows.Media;
 
+[assembly: DisableDpiAwareness]
 namespace UXM
 {
     static class Program

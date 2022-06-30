@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="UXM.FileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UXM" d:DataContext="{d:DesignInstance Type=local:FileView}"
+             mc:Ignorable="d" d:Background="White"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+                <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <TextBox Text="{Binding ItemFilter, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
+                <Label Foreground="LightSlateGray" Content="Search..." IsEnabled="False" Margin="5,0,0,0" IsHitTestVisible="False"
+                           Visibility="{Binding ItemFilter, Converter={StaticResource ResourceKey=StringToVisibilityConverter}}"/>
+            </Grid>
+
+            <TreeView Name="FileTree" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Files}" TreeViewItem.Collapsed="TreeViewItem_Collapsed" >
+
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type local:TreeNode}" ItemsSource="{Binding Nodes}">
+                        <TreeViewItem Collapsed="TreeViewItem_Collapsed">
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding Selected}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </Grid>
+    </Grid>
+</UserControl>

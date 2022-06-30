@@ -24,146 +24,148 @@ namespace UXM
         {
             InitializeComponent();
             Parent = parent;
-            if (currentNodes.Nodes.Count > 0)
-                fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
+            //if (currentNodes.Nodes.Count > 0)
+            //    fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
         }
 
-        public static void PopulateTreeview(string exePath)
+        public void PopulateTreeview(string exePath)
         {
-            Util.Game game;
-            if (File.Exists(exePath))
-                game = Util.GetExeVersion(exePath);
-            else
-                return;
+            fileView.PopulateTreeview(exePath);
+//            Util.Game game;
+//            if (File.Exists(exePath))
+//                game = Util.GetExeVersion(exePath);
+//            else
+//                return;
 
-            currentNodes.Nodes.Clear();
+//            currentNodes.Nodes.Clear();
 
-            Prefix = GameInfo.GetPrefix(game);
+//            Prefix = GameInfo.GetPrefix(game);
 
-#if DEBUG
-            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+//#if DEBUG
+//            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
-#else
-            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
-#endif
-            currentNodes.Nodes.Add(PopulateTreeNode2(fileList, @"/", Prefix));
+//#else
+//            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
+//#endif
+//            currentNodes.Nodes.Add(PopulateTreeNode2(fileList, @"/", Prefix));
         }
 
-        private static TreeNode PopulateTreeNode2(string[] paths, string pathSeparator, string prefix)
-        {
-            if (paths == null)
-                return null;
+        //private static TreeNode PopulateTreeNode2(string[] paths, string pathSeparator, string prefix)
+        //{
+        //    if (paths == null)
+        //        return null;
 
-            TreeNode thisnode = new TreeNode(prefix);
-            TreeNode currentnode;
-            char[] cachedpathseparator = pathSeparator.ToCharArray();
-            bool sound = false;
+        //    TreeNode thisnode = new TreeNode(prefix);
+        //    TreeNode currentnode;
+        //    char[] cachedpathseparator = pathSeparator.ToCharArray();
+        //    bool sound = false;
 
-            for (int i = 0; i < paths.Length; i++)
-            {
-                if (paths[i] == "#sd")
-                    sound = true;
+        //    for (int i = 0; i < paths.Length; i++)
+        //    {
+        //        if (paths[i] == "#sd")
+        //            sound = true;
 
-                if (paths[i].StartsWith("#"))
-                    continue;
+        //        if (paths[i].StartsWith("#"))
+        //            continue;
 
-                if (sound)
-                    paths[i] = $"/sound/{paths[i]}";
-                currentnode = thisnode;
-                foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    if (currentnode.Nodes[subPath] == null)
-                        currentnode = currentnode.Nodes.Add(subPath, subPath);
-                    else
-                        currentnode = currentnode.Nodes[subPath];
-                }
-            }
+        //        if (sound)
+        //            paths[i] = $"/sound/{paths[i]}";
+        //        currentnode = thisnode;
+        //        foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
+        //        {
+        //            if (currentnode[subPath] == null)
+        //                currentnode.Nodes.Add(new TreeNode(subPath));
+        //            else
+        //                currentnode = currentnode[subPath];
+        //        }
+        //    }
 
-            return thisnode;
-        }
+        //    return thisnode;
+        //}
 
 
-        private void fileTreeView_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            if (e.Action == TreeViewAction.ByMouse || e.Action == TreeViewAction.ByKeyboard)
-            {
-                try
-                {
-                    e.Node.TreeView.BeginUpdate();
-                    if (e.Node.Nodes.Count > 0)
-                    {
-                        var parentNode = e.Node;
-                        var nodes = e.Node.Nodes;
-                        CheckedOrUnCheckedNodes(parentNode, nodes);
-                    }
+        //private void fileTreeView_AfterCheck(object sender, TreeViewEventArgs e)
+        //{
+        //    if (e.Action == TreeViewAction.ByMouse || e.Action == TreeViewAction.ByKeyboard)
+        //    {
+        //        try
+        //        {
+        //            e.Node.TreeView.BeginUpdate();
+        //            if (e.Node.Nodes.Count > 0)
+        //            {
+        //                var parentNode = e.Node;
+        //                var nodes = e.Node.Nodes;
+        //                CheckedOrUnCheckedNodes(parentNode, nodes);
+        //            }
 
-                    if (!e.Node.Checked)
-                    {
-                        if (e.Node.Parent != null)
-                            UncheckParent(e.Node.Parent);
-                    }
-                }
-                finally
-                {
-                    e.Node.TreeView.EndUpdate();
-                }
-            }
-        }
+        //            if (!e.Node.Checked)
+        //            {
+        //                if (e.Node.Parent != null)
+        //                    UncheckParent(e.Node.Parent);
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            e.Node.TreeView.EndUpdate();
+        //        }
+        //    }
+        //}
 
-        private void UncheckParent(TreeNode parentNode)
-        {
-            parentNode.Checked = false;
+        //private void UncheckParent(TreeNode parentNode)
+        //{
+        //    parentNode.Checked = false;
 
-            if (parentNode.Parent != null)
-                UncheckParent(parentNode.Parent);
-        }
+        //    if (parentNode.Parent != null)
+        //        UncheckParent(parentNode.Parent);
+        //}
 
-        private void CheckedOrUnCheckedNodes(TreeNode parentNode, TreeNodeCollection nodes)
-        {
-            if (nodes.Count > 0)
-            {
-                foreach (TreeNode node in nodes)
-                {
-                    node.Checked = parentNode.Checked;
-                    CheckedOrUnCheckedNodes(parentNode, node.Nodes);
-                }
-            }
-        }
+        //private void CheckedOrUnCheckedNodes(TreeNode parentNode, TreeNodeCollection nodes)
+        //{
+        //    if (nodes.Count > 0)
+        //    {
+        //        foreach (TreeNode node in nodes)
+        //        {
+        //            node.Checked = parentNode.Checked;
+        //            CheckedOrUnCheckedNodes(parentNode, node.Nodes);
+        //        }
+        //    }
+        //}
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
-        {
-            fileTreeView.Nodes[0].Checked = true;
-            CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
-        }
+        //private void btnSelectAll_Click(object sender, EventArgs e)
+        //{
+        //    fileTreeView.Nodes[0].Checked = true;
+        //    CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
+        //}
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            fileTreeView.Nodes[0].Checked = false;
-            CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
-        }
+        //private void btnClear_Click(object sender, EventArgs e)
+        //{
+        //    fileTreeView.Nodes[0].Checked = false;
+        //    CheckedOrUnCheckedNodes(fileTreeView.Nodes[0], fileTreeView.Nodes);
+        //}
 
         public static List<string> SelectedFiles = new List<string>();
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            SelectedFiles.Clear();
-            AddSelectedFiles(fileTreeView.Nodes);
-            Parent.SetSkip(SelectedFiles.Any());
-            currentNodes.Nodes.Clear();
-            if (fileTreeView.Nodes.Count > 0)
-                currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
-            Close();
-        }
+        //private void btnOk_Click(object sender, EventArgs e)
+        //{
+        //    SelectedFiles.Clear();
+        //    AddSelectedFiles(fileTreeView.Nodes);
+        //    Parent.SetSkip(SelectedFiles.Any());
+        //    currentNodes.Nodes.Clear();
+        //    if (fileTreeView.Nodes.Count > 0)
+        //        currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
+        //    Close();
+        //}
 
-        private void AddSelectedFiles(TreeNodeCollection nodes)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.Nodes.Count > 0)
-                    AddSelectedFiles(node.Nodes);
-                else
-                    if (node.Checked) SelectedFiles.Add(node.FullPath.Replace(Prefix, ""));
-            }
-        }
+        //private void AddSelectedFiles(TreeNodeCollection nodes)
+        //{
+        //    foreach (TreeNode node in nodes)
+        //    {
+        //        if (node.Nodes.Count > 0)
+        //            AddSelectedFiles(node.Nodes);
+        //        else
+        //            if (node.Checked) SelectedFiles.Add(node.FullPath.Replace(Prefix, ""));
+        //    }
+        //}
+
     }
 }
