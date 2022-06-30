@@ -73,10 +73,10 @@ namespace UXM
             SekiroBonus,
             EldenRing
         }
-        public static IEnumerable<TreeNode> Traverse(this TreeNode root)
+        public static IEnumerable<TreeNode> Traverse(this IEnumerable<TreeNode> root)
         {
-            var stack = new Stack<TreeNode>();
-            stack.Push(root);
+            var stack = new Stack<TreeNode>(root);
+
             while (stack.Any())
             {
                 var node = stack.Pop();

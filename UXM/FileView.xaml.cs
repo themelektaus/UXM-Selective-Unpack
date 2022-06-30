@@ -25,10 +25,8 @@ namespace UXM
     /// </summary>
     public partial class FileView : UserControl, INotifyPropertyChanged
     {
-        private string Prefix;
-
+        public string Prefix;
         public ObservableCollection<TreeNode> TreeNodesCollection { get; set; }
-        public List<TreeNode> AllNodes { get; set; }
 
         private string _filterItems = "";
         public string ItemFilter
@@ -37,13 +35,15 @@ namespace UXM
             set
             {
                 SetField(ref _filterItems, value);
-                Testy();
-                OnPropertyChanged(nameof(TreeNodesCollection));
-                //Files.Refresh();
+                FilterTreeView();
             }
         }
-
-        public ICollectionView Files { get; set; }
+        private bool _expand = false;
+        public bool Expand
+        {
+            get => _expand;
+            set => SetField(ref _expand, value);
+        }
 
         public FileView()
         {
@@ -90,30 +90,19 @@ namespace UXM
 #endif
             Dispatcher.Invoke(() =>
             {
-                AllNodes = new List<TreeNode>();
-                AllNodes.Add(PopulateTreeNodes(fileList, @"/", Prefix));
-                TreeNodesCollection = new ObservableCollection<TreeNode>(AllNodes);
+                TreeNodesCollection = new ObservableCollection<TreeNode>(new List<TreeNode> { PopulateTreeNodes(fileList, @"/", Prefix) });
             });
 
             //Files = CollectionViewSource.GetDefaultView(HierarchicalDataSource);
             //Files.Filter += FilterFiles;
             OnPropertyChanged(nameof(TreeNodesCollection));
         }
-
-        private bool FilterFiles(object obj)
-        {
-            if (obj is TreeNode node)
-                return node.Name.ToLower().Contains(ItemFilter) || node.HasChildWithName(ItemFilter);
-
-            return false;
-        }
-
         private TreeNode PopulateTreeNodes(string[] paths, string pathSeparator, string prefix)
         {
             if (paths == null)
                 return null;
 
-            TreeNode thisnode = new TreeNode(this, prefix);
+            TreeNode thisnode = new TreeNode(null, prefix);
             TreeNode currentnode;
             char[] cachedpathseparator = pathSeparator.ToCharArray();
             bool sound = false;
@@ -132,7 +121,7 @@ namespace UXM
                 foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode[subPath] == null)
-                        currentnode.NodeCollection.Add(new TreeNode(this, subPath));
+                        currentnode.Nodes.Add(new TreeNode(currentnode, subPath));
 
                     currentnode = currentnode[subPath];
                 }
@@ -151,23 +140,35 @@ namespace UXM
             (sender as TreeViewItem).IsExpanded = true;
         }
 
-
-
-        public void Testy()
+        public void FilterTreeView()
         {
-            foreach (TreeNode n in AllNodes[0].Traverse())
+            foreach (TreeNode n in TreeNodesCollection.Traverse())
             {
-
-                if (n.Name.ToLower().Contains(ItemFilter) || n.HasChildWithName(ItemFilter))
-                {
-                    if (!TreeNodesCollection.Contains(n))
-                        TreeNodesCollection.Add(n);
-                }
-                else
-                {
-                    TreeNodesCollection.Remove(n);
-                }
+                n.Visibility = n.Name.ToLower().Contains(ItemFilter.ToLower()) || n.HasChildWithName(ItemFilter.ToLower());
             }
+        }
+
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+           Parent.SaveSelection();
+        }
+
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNodesCollection[0].Selected = true;
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNodesCollection[0].Selected = true;
+            TreeNodesCollection[0].Selected = false;
+            ItemFilter = "";
+        }
+
+        FormFileView Parent { get; set; }
+        internal void SetParent(FormFileView formFileView)
+        {
+            Parent = formFileView;
         }
     }
 }

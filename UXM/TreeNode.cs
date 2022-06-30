@@ -12,9 +12,11 @@ namespace UXM
 {
     public class TreeNode : INotifyPropertyChanged
     {
-        public ObservableCollection<TreeNode> NodeCollection { get; set; }
-        public ICollectionView Nodes => CollectionViewSource.GetDefaultView(NodeCollection);
+        public ObservableCollection<TreeNode> Nodes { get; set; }
         public string Name { get; set; }
+        public TreeNode Parent { get; }
+        public string FullPath => $"{Parent?.FullPath}/{Name}";
+
         private bool _visibility = true;
         public bool Visibility
         {
@@ -26,23 +28,37 @@ namespace UXM
         public bool Selected
         {
             get => _selected;
-            set => SetField(ref _selected, value);
+            set
+            {
+                if (SetField(ref _selected, value))
+                {
+                    if (!_correcting)
+                    {
+                        foreach (TreeNode node in Nodes)
+                        {
+                            node.Selected = Selected;
+                        }
+                    }
+                   
+                    if (Parent != null && !Selected)
+                        Parent.CorrectCheckbox();
+                }
+            }
         }
-        public TreeNode(FileView fileView, string name)
+
+        private bool _correcting;
+        private void CorrectCheckbox()
         {
+            _correcting = true;
+            Selected = false;
+            _correcting = false;
+        }
+
+        public TreeNode(TreeNode parent, string name)
+        {
+            Parent = parent;
             Name = name;
-            NodeCollection = new ObservableCollection<TreeNode>();
-            //Nodes.Filter += FilterNodes;
-            //fileView.PropertyChanged += FileView_PropertyChanged;
-        }
-
-
-        private bool FilterNodes(object obj)
-        {
-            if (obj is TreeNode node)
-                return node.Name.ToLower().Contains(ItemFilter.ToLower()) || node.HasChildWithName(ItemFilter.ToLower());
-
-            return false;
+            Nodes = new ObservableCollection<TreeNode>();
         }
 
         private string _itemFilter = "";
@@ -79,7 +95,6 @@ namespace UXM
             return true;
         }
 
-
         private void FileView_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(FileView.ItemFilter))
@@ -90,7 +105,7 @@ namespace UXM
         {
             get
             {
-                foreach (TreeNode node in NodeCollection)
+                foreach (TreeNode node in Nodes)
                 {
                     if (node.Name == s)
                         return node;
@@ -102,10 +117,19 @@ namespace UXM
 
         public bool HasChildWithName(string itemFilter)
         {
-            foreach (TreeNode node in NodeCollection)
+            foreach (TreeNode node in Nodes)
             {
-                if (node.Name.ToLower().Contains(itemFilter.ToLower()) || node.HasChildWithName(itemFilter))
+                if (node.Name.ToLower().Contains(itemFilter) || node.HasChildWithName(itemFilter))
                     return true;
+            }
+            return false;
+        }
+
+        public bool UnselectedChildren()
+        {
+            foreach (TreeNode node in Nodes)
+            {
+                return node.Selected && node.UnselectedChildren();
             }
             return false;
         }

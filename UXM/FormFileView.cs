@@ -24,13 +24,15 @@ namespace UXM
         {
             InitializeComponent();
             Parent = parent;
+            FileView.SetParent(this);
             //if (currentNodes.Nodes.Count > 0)
             //    fileTreeView.Nodes.Add((TreeNode)currentNodes.Nodes[0].Clone());
         }
 
         public void PopulateTreeview(string exePath)
         {
-            fileView.PopulateTreeview(exePath);
+
+            FileView.PopulateTreeview(exePath);
 //            Util.Game game;
 //            if (File.Exists(exePath))
 //                game = Util.GetExeVersion(exePath);
@@ -145,27 +147,26 @@ namespace UXM
 
         public static List<string> SelectedFiles = new List<string>();
 
-        //private void btnOk_Click(object sender, EventArgs e)
-        //{
-        //    SelectedFiles.Clear();
-        //    AddSelectedFiles(fileTreeView.Nodes);
-        //    Parent.SetSkip(SelectedFiles.Any());
-        //    currentNodes.Nodes.Clear();
-        //    if (fileTreeView.Nodes.Count > 0)
-        //        currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
-        //    Close();
-        //}
+        public void SaveSelection()
+        {
+            SelectedFiles.Clear();
+            AddSelectedFiles(FileView.TreeNodesCollection);
+            Parent.SetSkip(SelectedFiles.Any());
+            //if (fileTreeView.Nodes.Count > 0)
+            //    currentNodes.Nodes.Add((TreeNode)fileTreeView.Nodes[0].Clone());
+            Close();
+        }
 
-        //private void AddSelectedFiles(TreeNodeCollection nodes)
-        //{
-        //    foreach (TreeNode node in nodes)
-        //    {
-        //        if (node.Nodes.Count > 0)
-        //            AddSelectedFiles(node.Nodes);
-        //        else
-        //            if (node.Checked) SelectedFiles.Add(node.FullPath.Replace(Prefix, ""));
-        //    }
-        //}
+        private void AddSelectedFiles(IEnumerable<TreeNode> nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Nodes.Count > 0)
+                    AddSelectedFiles(node.Nodes.ToList());
+                else
+                    if (node.Selected) SelectedFiles.Add(node.FullPath.Replace($"{FileView.Prefix}/", ""));
+            }
+        }
 
     }
 }

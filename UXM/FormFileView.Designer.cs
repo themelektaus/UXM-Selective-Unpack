@@ -30,7 +30,7 @@ namespace UXM
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.fileView = new UXM.FileView();
+            this.FileView = new UXM.FileView();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -41,7 +41,7 @@ namespace UXM
             this.elementHost1.Size = new System.Drawing.Size(819, 515);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.fileView;
+            this.elementHost1.Child = this.FileView;
             // 
             // FormFileView
             // 
@@ -58,6 +58,6 @@ namespace UXM
         #endregion
 
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private FileView fileView;
+        private FileView FileView;
     }
 }
