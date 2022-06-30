@@ -15,6 +15,12 @@ namespace UXM
         public ObservableCollection<TreeNode> NodeCollection { get; set; }
         public ICollectionView Nodes => CollectionViewSource.GetDefaultView(NodeCollection);
         public string Name { get; set; }
+        private bool _visibility = true;
+        public bool Visibility
+        {
+            get => _visibility;
+            set => SetField(ref _visibility, value);
+        }
 
         private bool _selected;
         public bool Selected
@@ -26,8 +32,8 @@ namespace UXM
         {
             Name = name;
             NodeCollection = new ObservableCollection<TreeNode>();
-            Nodes.Filter += FilterNodes;
-            fileView.PropertyChanged += FileView_PropertyChanged;
+            //Nodes.Filter += FilterNodes;
+            //fileView.PropertyChanged += FileView_PropertyChanged;
         }
 
 
@@ -39,15 +45,15 @@ namespace UXM
             return false;
         }
 
-        private string _filterItems = "";
+        private string _itemFilter = "";
         public string ItemFilter
         {
-            get => _filterItems;
+            get => _itemFilter;
             set
             {
-                if (SetField(ref _filterItems, value))
+                if (SetField(ref _itemFilter, value))
                 {
-                    Nodes.Refresh();
+                    //Nodes.Refresh();
                 }
             }
         }

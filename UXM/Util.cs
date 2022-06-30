@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace UXM
 {
-    static class Util
+    public static class Util
     {
         public static Game GetExeVersion(string exePath)
         {
@@ -70,6 +72,21 @@ namespace UXM
             Sekiro,
             SekiroBonus,
             EldenRing
+        }
+        public static IEnumerable<TreeNode> Traverse(this TreeNode root)
+        {
+            var stack = new Stack<TreeNode>();
+            stack.Push(root);
+            while (stack.Any())
+            {
+                var node = stack.Pop();
+                yield return node;
+
+                foreach (TreeNode child in node.Nodes)
+                {
+                    stack.Push(child);
+                }
+            }
         }
     }
 }

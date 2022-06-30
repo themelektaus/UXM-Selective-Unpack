@@ -84,6 +84,7 @@
     <Compile Include="ArchiveDictionary.cs" />
     <Compile Include="ArchiveKeys.cs" />
     <Compile Include="ArchiveUnpacker.cs" />
+    <Compile Include="Converters\BoolToVisibiltyConverter.cs" />
     <Compile Include="Converters\StringToVisbilityConverter.cs" />
     <Compile Include="CryptographyUtility.cs" />
     <Compile Include="ExePatcher.cs" />

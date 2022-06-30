@@ -26,7 +26,9 @@ namespace UXM
     public partial class FileView : UserControl, INotifyPropertyChanged
     {
         private string Prefix;
-        public ObservableCollection<TreeNode> HierarchicalDataSource { get; set; }
+
+        public ObservableCollection<TreeNode> TreeNodesCollection { get; set; }
+        public List<TreeNode> AllNodes { get; set; }
 
         private string _filterItems = "";
         public string ItemFilter
@@ -35,7 +37,9 @@ namespace UXM
             set
             {
                 SetField(ref _filterItems, value);
-                Files.Refresh();
+                Testy();
+                OnPropertyChanged(nameof(TreeNodesCollection));
+                //Files.Refresh();
             }
         }
 
@@ -86,13 +90,14 @@ namespace UXM
 #endif
             Dispatcher.Invoke(() =>
             {
-                HierarchicalDataSource = new ObservableCollection<TreeNode>();
-                HierarchicalDataSource.Add(PopulateTreeNodes(fileList, @"/", Prefix));
+                AllNodes = new List<TreeNode>();
+                AllNodes.Add(PopulateTreeNodes(fileList, @"/", Prefix));
+                TreeNodesCollection = new ObservableCollection<TreeNode>(AllNodes);
             });
 
-            Files = CollectionViewSource.GetDefaultView(HierarchicalDataSource);
-            Files.Filter += FilterFiles;
-            OnPropertyChanged(nameof(Files));
+            //Files = CollectionViewSource.GetDefaultView(HierarchicalDataSource);
+            //Files.Filter += FilterFiles;
+            OnPropertyChanged(nameof(TreeNodesCollection));
         }
 
         private bool FilterFiles(object obj)
@@ -127,7 +132,7 @@ namespace UXM
                 foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode[subPath] == null)
-                        currentnode.NodeCollection.Add(new TreeNode(this,subPath));
+                        currentnode.NodeCollection.Add(new TreeNode(this, subPath));
 
                     currentnode = currentnode[subPath];
                 }
@@ -144,6 +149,25 @@ namespace UXM
         private void TreeViewItem_Collapsed(object sender, RoutedEventArgs e)
         {
             (sender as TreeViewItem).IsExpanded = true;
+        }
+
+
+
+        public void Testy()
+        {
+            foreach (TreeNode n in AllNodes[0].Traverse())
+            {
+
+                if (n.Name.ToLower().Contains(ItemFilter) || n.HasChildWithName(ItemFilter))
+                {
+                    if (!TreeNodesCollection.Contains(n))
+                        TreeNodesCollection.Add(n);
+                }
+                else
+                {
+                    TreeNodesCollection.Remove(n);
+                }
+            }
         }
     }
 }
