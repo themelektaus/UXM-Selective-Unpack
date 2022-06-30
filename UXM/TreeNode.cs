@@ -14,6 +14,10 @@ namespace UXM
     {
         public ObservableCollection<TreeNode> Nodes { get; set; }
         public string Name { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
         public TreeNode Parent { get; }
         public string FullPath => $"{Parent?.FullPath}/{Name}";
 

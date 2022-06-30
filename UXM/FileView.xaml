@@ -88,6 +88,8 @@
                 <Button Content="Select All" Height="25" Click="SelectAll_Click"/>
                 <Separator Visibility="Hidden"/>
                 <Button Content="Clear" Height="25" Click="Clear_Click"/>
+                <!--<Separator Visibility="Hidden"/>-->
+                <!--<Button Content="Show" Height="25" Click="Show_Click"/>-->
             </StackPanel>
 
             <Grid>

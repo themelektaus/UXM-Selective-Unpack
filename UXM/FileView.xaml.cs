@@ -86,7 +86,7 @@ namespace UXM
             var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
 #else
-            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !s.StartsWith("#") && !string.IsNullOrWhiteSpace(s)).ToArray();
+            var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 #endif
             Dispatcher.Invoke(() =>
             {
@@ -107,18 +107,19 @@ namespace UXM
             char[] cachedpathseparator = pathSeparator.ToCharArray();
             bool sound = false;
 
-            for (int i = 0; i < paths.Length; i++)
+            foreach (string path in paths)
             {
-                if (paths[i] == "#sd")
+                if (path == "#sd")
                     sound = true;
 
-                if (paths[i].StartsWith("#"))
+                if (path.StartsWith("#"))
                     continue;
 
+                string newPath = path;
                 if (sound)
-                    paths[i] = $"/sound/{paths[i]}";
+                    newPath = $@"/sound/{path}";
                 currentnode = thisnode;
-                foreach (string subPath in paths[i].Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string subPath in newPath.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode[subPath] == null)
                         currentnode.Nodes.Add(new TreeNode(currentnode, subPath));
@@ -150,7 +151,7 @@ namespace UXM
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-           Parent.SaveSelection();
+            Parent.SaveSelection();
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
@@ -163,6 +164,26 @@ namespace UXM
             TreeNodesCollection[0].Selected = true;
             TreeNodesCollection[0].Selected = false;
             ItemFilter = "";
+        }
+
+        private void Show_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+
+            void Get(TreeNode nodes)
+            {
+                foreach (var node in nodes.Nodes)
+                {
+                    if (node.Nodes.Count > 0)
+                        Get(node);
+                    else
+                        if (node.Selected) list.Add(node.FullPath);
+
+                }
+            }
+
+            Get(TreeNodesCollection[0]);
+            MessageBox.Show(list[0]);
         }
 
         FormFileView Parent { get; set; }
