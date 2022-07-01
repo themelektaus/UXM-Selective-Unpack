@@ -49,20 +49,32 @@ namespace UXM
         public static string GetPrefix(Util.Game game)
         {
             string prefix;
-            if (game == Util.Game.DarkSouls2)
-                prefix = "DarkSouls2";
-            else if (game == Util.Game.Scholar)
-                prefix = "Scholar";
-            else if (game == Util.Game.DarkSouls3)
-                prefix = "DarkSouls3";
-            else if (game == Util.Game.Sekiro)
-                prefix = "Sekiro";
-            else if (game == Util.Game.SekiroBonus)
-                prefix = "SekiroBonus";
-            else if (game == Util.Game.EldenRing)
-                prefix = "EldenRing";
-            else
-                throw new ArgumentException("Invalid game type.");
+            switch (game)
+            {
+                case Util.Game.DarkSouls:
+                    prefix = "DarkSouls";
+                    break;
+                case Util.Game.DarkSouls2:
+                    prefix = "DarkSouls2";
+                    break;
+                case Util.Game.Scholar:
+                    prefix = "Scholar";
+                    break;
+                case Util.Game.DarkSouls3:
+                    prefix = "DarkSouls3";
+                    break;
+                case Util.Game.Sekiro:
+                    prefix = "Sekiro";
+                    break;
+                case Util.Game.SekiroBonus:
+                    prefix = "SekiroBonus";
+                    break;
+                case Util.Game.EldenRing:
+                    prefix = "EldenRing";
+                    break;
+                default:
+                    throw new ArgumentException("Invalid game type.");
+            }
             return prefix;
         }
     }

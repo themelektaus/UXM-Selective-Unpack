@@ -33,6 +33,8 @@ namespace UXM
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
+            string lol = Util.GetSteamPath(@"{0}\steamapps\common\ELDEN RING\Game\eldenring.exe");
+
             Text = $"UXM {Application.ProductVersion} Selective Unpacker";
             EnableControls(true);
 
@@ -70,14 +72,26 @@ namespace UXM
         {
             await Dispatcher.CurrentDispatcher.Invoke(async () =>
             {
-                btnFileView.Enabled = false;
-                btnFileView.Text = "Loading";
-                await Task.Run(() => formFileView.PopulateTreeview(txtExePath.Text));
-                btnFileView.Text = "View Files";
-                btnFileView.Enabled = true;
+                try
+                {
+                    btnFileView.Enabled = false;
+                    btnFileView.Text = "Loading";
+                    await Task.Run(() => formFileView.PopulateTreeview(txtExePath.Text));
+                    btnFileView.Text = "View Files";
+                    btnFileView.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    txtExePath.Text = settings.ExePath;
+                }
+
+                settings.ExePath = txtExePath.Text;
+
             });
-     
+         
         }
+           
 
         private void llbUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -108,7 +122,14 @@ namespace UXM
                     settings.WindowSize = RestoreBounds.Size;
                 }
 
-                settings.ExePath = txtExePath.Text;
+                try
+                {
+                    Util.GetExeVersion(txtExePath.Text);
+                }
+                catch
+                {
+                    return;
+                }
             }
         }
 
@@ -281,7 +302,8 @@ namespace UXM
         {
             await Dispatcher.CurrentDispatcher.Invoke(async () =>
             {
-                await GetTreeView();
+                    await GetTreeView();
+                
             });
         }
 

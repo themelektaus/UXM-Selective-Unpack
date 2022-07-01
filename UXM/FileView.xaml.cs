@@ -71,14 +71,21 @@ namespace UXM
             return true;
         }
 
+        private Util.Game _currentGame { get; set; }
         public void PopulateTreeview(string exePath)
         {
-
             Util.Game game;
+
             if (File.Exists(exePath))
                 game = Util.GetExeVersion(exePath);
             else
                 return;
+
+
+            if (_currentGame != null && _currentGame == game)
+                return;
+
+            _currentGame = game;
 
             Prefix = GameInfo.GetPrefix(game);
 
@@ -93,8 +100,6 @@ namespace UXM
                 TreeNodesCollection = new ObservableCollection<TreeNode>(new List<TreeNode> { PopulateTreeNodes(fileList, @"/", Prefix) });
             });
 
-            //Files = CollectionViewSource.GetDefaultView(HierarchicalDataSource);
-            //Files.Filter += FilterFiles;
             OnPropertyChanged(nameof(TreeNodesCollection));
         }
         private TreeNode PopulateTreeNodes(string[] paths, string pathSeparator, string prefix)
