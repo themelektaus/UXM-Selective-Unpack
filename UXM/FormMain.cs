@@ -33,8 +33,6 @@ namespace UXM
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-            string lol = Util.GetSteamPath(@"{0}\steamapps\common\ELDEN RING\Game\eldenring.exe");
-
             Text = $"UXM {Application.ProductVersion} Selective Unpacker";
             EnableControls(true);
 
@@ -44,7 +42,10 @@ namespace UXM
             if (settings.WindowMaximized)
                 WindowState = FormWindowState.Maximized;
 
-            txtExePath.Text = settings.ExePath;
+            string installPath = Util.GetSteamPath(settings.ExePath);
+
+            txtExePath.Text = installPath ?? settings.ExePath;
+
             Octokit.GitHubClient gitHubClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("UXM-Selective-Unpack"));
             try
             {
