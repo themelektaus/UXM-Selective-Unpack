@@ -100,6 +100,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameData.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="GameRestorer.cs" />
     <Compile Include="Program.cs" />
@@ -139,18 +140,44 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dist\readme.txt" />
-    <Content Include="dist\res\DarkSouls2Dictionary.txt" />
-    <Content Include="dist\res\DarkSouls2GameInfo.xml" />
-    <Content Include="dist\res\DarkSouls3Dictionary.txt" />
-    <Content Include="dist\res\DarkSouls3GameInfo.xml" />
-    <Content Include="dist\res\EldenRingDictionary.txt" />
-    <Content Include="dist\res\EldenRingGameInfo.xml" />
-    <Content Include="dist\res\ScholarDictionary.txt" />
-    <Content Include="dist\res\ScholarGameInfo.xml" />
-    <Content Include="dist\res\SekiroBonusDictionary.txt" />
-    <Content Include="dist\res\SekiroDictionary.txt" />
-    <Content Include="dist\res\SekiroBonusGameInfo.xml" />
-    <Content Include="dist\res\SekiroGameInfo.xml" />
+    <Content Include="res\DarkSouls2Dictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\DarkSouls2GameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\DarkSouls3Dictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\DarkSouls3GameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\DarkSoulsDictionary.txt" />
+    <Content Include="res\DarkSoulsGameInfo.xml" />
+    <Content Include="res\EldenRingDictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\EldenRingGameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\ScholarDictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\ScholarGameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\SekiroBonusDictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\SekiroDictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\SekiroBonusGameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\SekiroGameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="FodyWeavers.xml" />
     <Content Include="icon.ico" />
   </ItemGroup>
@@ -158,6 +185,10 @@
     <ProjectReference Include="..\..\SoulsFormats\SoulsFormats\SoulsFormats.csproj">
       <Project>{22C664BD-877B-44DF-8ECF-2808522469A8}</Project>
       <Name>SoulsFormats</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yabber\Yabber\Yabber.csproj">
+      <Project>{0406fe88-f044-4a16-994e-6e3c9715ac60}</Project>
+      <Name>Yabber</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +215,7 @@
 if "$(ConfigurationName)" == "Release" (
   md "%25output%25"
   del "%25output%25"
-  xcopy "$(ProjectDir)dist\*.*" "%25output%25" /Y /I /E
+  xcopy "$(ProjectDir)res\*.*" "%25output%25/res" /Y /I /E
   copy "$(SolutionDir)\README.md" "%25output%25\" 
   ren "%25output%25\README.md" "README.txt"  
   copy "$(TargetPath)" "%25output%25\"

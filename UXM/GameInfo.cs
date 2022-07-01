@@ -17,6 +17,7 @@ namespace UXM
         public List<string> BackupDirs;
         public List<string> DeleteDirs;
         public List<string> Replacements;
+        public List<string> Replace;
         public static readonly string ExeDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         public GameInfo(string xmlStr, string dictionaryStr, Util.Game game)
@@ -29,6 +30,7 @@ namespace UXM
             BackupDirs = xml.Root.Element("backup_dirs").Elements().Select(element => element.Value).ToList();
             DeleteDirs = xml.Root.Element("delete_dirs").Elements().Select(element => element.Value).ToList();
             Replacements = xml.Root.Element("replacements").Elements().Select(element => element.Value).ToList();
+            Replace = xml.Root.Element("replacements").Elements().Select(element => element.Value).ToList();
         }
 
         public static GameInfo GetGameInfo(Util.Game game)
@@ -36,13 +38,9 @@ namespace UXM
 
             string prefix = GetPrefix(game);
 
-#if DEBUG
-            string gameInfo = File.ReadAllText($@"..\..\dist\res\{prefix}GameInfo.xml");
-            string dictionary = File.ReadAllText($@"..\..\dist\res\{prefix}Dictionary.txt");
-#else
             string gameInfo = File.ReadAllText($@"{ExeDir}\res\{prefix}GameInfo.xml");
             string dictionary = File.ReadAllText($@"{ExeDir}\res\{prefix}Dictionary.txt");
-#endif
+
             return new GameInfo(gameInfo, dictionary, game);
         }
 

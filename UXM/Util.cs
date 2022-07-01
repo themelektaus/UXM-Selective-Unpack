@@ -21,10 +21,8 @@ namespace UXM
             {
                 case "DARKSOULS.exe":
                     return Game.DarkSouls;
-                    break;
                 case "DarkSoulsRemastered.exe":
                     throw new Exception("Why you trying to unpack a game that's already unpacked? :thinkrome:");
-                    break;
                 case "DarkSoulsII.exe":
                     {
                         using (FileStream fs = File.OpenRead(exePath))
@@ -68,7 +66,6 @@ namespace UXM
         public enum Game
         {
             DarkSouls,
-            DarkSoulsRemastered,
             DarkSouls2,
             Scholar,
             DarkSouls3,
@@ -77,34 +74,25 @@ namespace UXM
             EldenRing
         }
 
-        static (string path, string value)[] _keyPaths = new (string path, string value)[]
+        static (string, string)[] _pathValueTuple = new (string, string)[]
         {
                 (@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam", "SteamPath"),
                 (@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath"),
                 (@"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam", "InstallPath"),
-                (@"HKEY_CURRENT_USER\SOFTWARE\Wow6432Node\Valve\Steam", "SteamPath")
+                (@"HKEY_CURRENT_USER\SOFTWARE\Wow6432Node\Valve\Steam", "SteamPath"),
         };
 
-        public static string GetSteamPath(string gamePath)
+        public static string TryGetGameInstallLocation(string gamePath)
         {
             if (!gamePath.Contains("{0}"))
                 return gamePath;
 
-            string installPath = null;
+            string steamPath = GetSteamInstallPath();
 
-            foreach ((string path, string value) item in _keyPaths)
-            {
-                string registryKey = item.path;
-                installPath = (string)Registry.GetValue(registryKey, item.value, null);
-
-                if (installPath != null)
-                    break;
-            }
-     
-            if (string.IsNullOrWhiteSpace(installPath))
+            if (string.IsNullOrWhiteSpace(steamPath))
                 return null;
 
-            string[] libraryFolders = File.ReadAllLines($@"{installPath}/SteamApps/libraryfolders.vdf");
+            string[] libraryFolders = File.ReadAllLines($@"{steamPath}/SteamApps/libraryfolders.vdf");
             char[] seperator = new char[] { '\t' };
 
             foreach (string line in libraryFolders)
@@ -113,13 +101,29 @@ namespace UXM
                     continue;
 
                 string[] split = line.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
-                string libraryPath = string.Format(gamePath, split.FirstOrDefault(x=> x.ToLower().Contains("steam")).Replace("\"", ""));
+                string libraryPath = string.Format(gamePath, split.FirstOrDefault(x => x.ToLower().Contains("steam")).Replace("\"", ""));
 
                 if (File.Exists(libraryPath))
-                    return libraryPath.Replace("\\\\","\\");
+                    return libraryPath.Replace("\\\\", "\\");
             }
 
             return null;
+        }
+
+        private static string GetSteamInstallPath()
+        {
+            string installPath = null;
+
+            foreach ((string Path, string Value) pathValueTuple in _pathValueTuple)
+            {
+                string registryKey = pathValueTuple.Path;
+                installPath = (string)Registry.GetValue(registryKey, pathValueTuple.Value, null);
+
+                if (installPath != null)
+                    break;
+            }
+
+            return installPath;
         }
 
         public static IEnumerable<TreeNode> Traverse(this IEnumerable<TreeNode> root)
@@ -137,5 +141,7 @@ namespace UXM
                 }
             }
         }
+
+
     }
 }

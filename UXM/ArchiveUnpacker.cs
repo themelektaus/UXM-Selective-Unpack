@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Yabber;
 
 namespace UXM
 {
@@ -136,9 +137,33 @@ namespace UXM
                     return error;
             }
 
+            if (game != Util.Game.DarkSouls)
+            {
+                progress.Report((1, "Unpacking complete!"));
+                return null;
+            }
+
+            progress.Report((0, @"Grabbing missing BHDs"));
+            GetBHD(gameDir, progress);
+
+            progress.Report((0, "Creating c4110 file"));
+            CreateC4110(gameDir);
+
+            progress.Report((0, @"Moving map tpf files"));
+            MoveTPFs(gameDir);
+
+            progress.Report((0, @"Extracting bhd/bdt pairs"));
+            ExtractBHD(gameDir, progress);
+
+
+            progress.Report((1, "Cleaning Archives"));
+            CleanupArchives(exePath);
+
             progress.Report((1, "Unpacking complete!"));
             return null;
         }
+
+
 
         private static async Task<string> UnpackArchive(string gameDir, string archive, string key, int index, int total,
             BHD5.Game gameVersion, ArchiveDictionary archiveDictionary,
@@ -207,11 +232,7 @@ namespace UXM
                                 if (archiveDictionary.GetPath(header.FileNameHash, out path))
                                 {
                                     unknown = false;
-                                    if (archive == @"sd\sd")
-                                        path = $"/sound/{path}";
-
                                     path = gameDir + path.Replace('/', '\\');
-
                                     if (File.Exists(path))
                                         continue;
                                 }
@@ -221,10 +242,9 @@ namespace UXM
                                         continue;
 
                                     unknown = true;
-                                    string filename = $"{archive.Split('\\')[0]}_{header.FileNameHash:D10}";
+                                    string filename = $"{archive}_{header.FileNameHash:D10}";
                                     string directory = $@"{gameDir}\_unknown";
                                     path = $@"{directory}\{filename}";
-
                                     if (File.Exists(path) || Directory.Exists(directory) && Directory.GetFiles(directory, $"{filename}.*").Length > 0)
                                         continue;
                                 }
@@ -318,5 +338,108 @@ namespace UXM
             }
             return bytes.Length;
         }
+
+        private static void GetBHD(string gameDir, IProgress<(double, string)> progress)
+        {
+            var bdt = Directory.GetFiles(gameDir, "*.chrtpfbdt", SearchOption.AllDirectories);
+
+            var position = 0;
+
+            foreach (var path in bdt)
+            {
+                position++;
+                var target = $@"{Path.GetDirectoryName(path)}\{Path.GetFileNameWithoutExtension(path)}.chrbnd";
+                var percent = (double)position / bdt.Length;
+                progress.Report((percent, $"Unpacking BND3 ({position}/{bdt.Length}): {target.Replace(gameDir, "")}..."));
+                UnpackBND(target);
+            }
+        }
+        public static void UnpackBND(string sourceFile)
+        {
+            string sourceDir = Path.GetDirectoryName(sourceFile);
+            string filename = Path.GetFileName(sourceFile);
+            string targetDir = $"{sourceDir}";
+
+            using (var bnd = new BND3Reader(sourceFile))
+            {
+                bnd.Unpack(filename, targetDir, new Progress<float>());
+            }
+
+        }
+        private static void CreateC4110(string gameDir)
+        {
+            string path = $@"{gameDir}\chr\c4110.chrtpfbhd";
+
+            File.WriteAllBytes(path, GameData.c4110);
+        }
+        private static void MoveTPFs(string gameDir)
+        {
+            Directory.CreateDirectory($@"{gameDir}\map\tx");
+            var tpfbdt = Directory.GetFiles(gameDir, "*.tpfbdt", SearchOption.AllDirectories);
+            var tpfbhd = Directory.GetFiles(gameDir, "*.tpfbhd", SearchOption.AllDirectories);
+            foreach (var file in tpfbdt)
+            {
+                File.Move(file, $@"{gameDir}\map\tx\{Path.GetFileName(file)}");
+            }
+
+            foreach (var file in tpfbhd)
+            {
+                File.Move(file, $@"{gameDir}\map\tx\{Path.GetFileName(file)}");
+            }
+        }
+        private static void ExtractBHD(string gameDir, IProgress<(double, string)> progress)
+        {
+            var bhd = Directory.GetFiles(gameDir, "*bhd", SearchOption.AllDirectories).Where(x => !x.Contains("bhd5")).ToArray();
+
+            var position = 0;
+
+            foreach (var filePath in bhd)
+            {
+                position++;
+                var percent = (double)position / bhd.Length;
+                progress.Report((percent, $"Unpacking BXF3 ({position}/{bhd.Length}): {filePath.Replace(gameDir, "")}..."));
+                UnpackBHD(filePath);
+                var bdt = filePath.Replace("bhd", "bdt");
+                File.Delete(filePath);
+                File.Delete(bdt);
+            }
+
+        }
+
+        public static void UnpackBHD(string sourceFile)
+        {
+            string sourceDir = Path.GetDirectoryName(sourceFile);
+            string filename = Path.GetFileName(sourceFile);
+            string targetDir = $"{sourceDir}";
+            if (filename.Contains(".chrtpfbhd"))
+                targetDir += $@"\{Path.GetFileNameWithoutExtension(filename)}";
+
+            string bdtExtension = Path.GetExtension(filename).Replace("bhd", "bdt");
+            string bdtFilename = $"{Path.GetFileNameWithoutExtension(filename)}{bdtExtension}";
+            string bdtPath = $"{sourceDir}\\{bdtFilename}";
+            if (File.Exists(bdtPath))
+            {
+                using (var bxf = new BXF3Reader(sourceFile, bdtPath))
+                {
+                    bxf.Unpack(filename, bdtFilename, targetDir, new Progress<float>());
+                }
+            }
+            else
+            {
+                //progress.Report($"BDT not found for BHD: {filename}");
+            }
+
+        }
+
+        private static void CleanupArchives(string installPath)
+        {
+            var archives = Directory.GetFiles(Path.GetDirectoryName(installPath), "dvdbnd*", SearchOption.TopDirectoryOnly);
+
+            foreach (var file in archives)
+            {
+                File.Delete(file);
+            }
+        }
+
     }
 }

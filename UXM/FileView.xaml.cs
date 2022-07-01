@@ -89,12 +89,8 @@ namespace UXM
 
             Prefix = GameInfo.GetPrefix(game);
 
-#if DEBUG
-            var fileList = File.ReadAllLines($@"..\..\dist\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-
-#else
             var fileList = File.ReadAllLines($@"{GameInfo.ExeDir}\res\{Prefix}Dictionary.txt").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-#endif
+
             Dispatcher.Invoke(() =>
             {
                 TreeNodesCollection = new ObservableCollection<TreeNode>(new List<TreeNode> { PopulateTreeNodes(fileList, @"/", Prefix) });
@@ -110,21 +106,11 @@ namespace UXM
             TreeNode thisnode = new TreeNode(null, prefix);
             TreeNode currentnode;
             char[] cachedpathseparator = pathSeparator.ToCharArray();
-            bool sound = false;
 
             foreach (string path in paths)
             {
-                if (path == "#sd")
-                    sound = true;
-
-                if (path.StartsWith("#"))
-                    continue;
-
-                string newPath = path;
-                if (sound)
-                    newPath = $@"/sound/{path}";
                 currentnode = thisnode;
-                foreach (string subPath in newPath.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string subPath in path.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode[subPath] == null)
                         currentnode.Nodes.Add(new TreeNode(currentnode, subPath));
