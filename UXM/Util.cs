@@ -119,7 +119,7 @@ namespace UXM
                 string libraryPath = string.Format(gamePath, split[1].Replace("\"", ""));
 
                 if (File.Exists(libraryPath))
-                    return libraryPath;
+                    return libraryPath.Replace("\\\\","\\");
             }
 
             return null;
