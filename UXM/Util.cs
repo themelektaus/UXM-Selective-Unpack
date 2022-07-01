@@ -87,8 +87,8 @@ namespace UXM
 
         public static string GetSteamPath(string gamePath)
         {
-            //if (!gamePath.Contains("{0}"))
-            //    return gamePath;
+            if (!gamePath.Contains("{0}"))
+                return gamePath;
 
             string installPath = null;
 
