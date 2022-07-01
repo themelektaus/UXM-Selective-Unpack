@@ -30,7 +30,14 @@ namespace UXM
             BackupDirs = xml.Root.Element("backup_dirs").Elements().Select(element => element.Value).ToList();
             DeleteDirs = xml.Root.Element("delete_dirs").Elements().Select(element => element.Value).ToList();
             Replacements = xml.Root.Element("replacements").Elements().Select(element => element.Value).ToList();
-            Replace = xml.Root.Element("replacements").Elements().Select(element => element.Value).ToList();
+            if (game == Util.Game.DarkSouls)
+            {
+                Replace = xml.Root.Element("replace").Elements().Select(element => element.Value).ToList();
+                //for (int i = 0; i < Replace.Count; i++)
+                //{
+                //    Replace[i] = Replace[i].Replace("\\\\", "\\");
+                //}
+            }
         }
 
         public static GameInfo GetGameInfo(Util.Game game)

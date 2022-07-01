@@ -166,8 +166,7 @@
             this.txtExePath.Name = "txtExePath";
             this.txtExePath.Size = new System.Drawing.Size(680, 26);
             this.txtExePath.TabIndex = 23;
-            this.txtExePath.Text = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\DARK SOULS III\\Game\\DarkSoulsIII.ex" +
-    "e";
+            this.txtExePath.Text = "{0}\\steamapps\\common\\EldenRing\\Game\\eldenring.exe";
             this.txtExePath.TextChanged += new System.EventHandler(this.txtExePath_TextChanged);
             // 
             // lblUpdate
@@ -219,9 +218,9 @@
             // 
             // ofdExe
             // 
-            this.ofdExe.FileName = "DarkSoulsIII.exe";
-            this.ofdExe.Filter = "Dark Souls Executable|*.exe";
-            this.ofdExe.Title = "Select Dark Souls executable...";
+            this.ofdExe.FileName = "eldenring.exe";
+            this.ofdExe.Filter = "FromSoft Game Executable|*.exe";
+            this.ofdExe.Title = "Select FromSoft Game executable...";
             // 
             // cbxSkip
             // 

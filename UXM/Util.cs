@@ -22,7 +22,7 @@ namespace UXM
                 case "DARKSOULS.exe":
                     return Game.DarkSouls;
                 case "DarkSoulsRemastered.exe":
-                    throw new Exception("Why you trying to unpack a game that's already unpacked? :thinkrome:");
+                    throw new Exception("Why you trying to unpack a game that comes pre-unpacked? :thinkrome:");
                 case "DarkSoulsII.exe":
                     {
                         using (FileStream fs = File.OpenRead(exePath))

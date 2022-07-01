@@ -131,39 +131,36 @@ namespace UXM
 
                 string archive = gameInfo.Archives[i];
 
-                string error = UnpackArchive(gameDir, archive, keys[archive], i,
+                string error = UnpackArchive(gameDir, archive, keys?[archive], i,
                     gameInfo.Archives.Count, gameInfo.BHD5Game, gameInfo.Dictionary, progress, ct).Result;
                 if (error != null)
                     return error;
             }
 
-            if (game != Util.Game.DarkSouls)
-            {
-                progress.Report((1, "Unpacking complete!"));
-                return null;
-            }
-
-            progress.Report((0, @"Grabbing missing BHDs"));
-            GetBHD(gameDir, progress);
-
-            progress.Report((0, "Creating c4110 file"));
-            CreateC4110(gameDir);
-
-            progress.Report((0, @"Moving map tpf files"));
-            MoveTPFs(gameDir);
-
-            progress.Report((0, @"Extracting bhd/bdt pairs"));
-            ExtractBHD(gameDir, progress);
-
-
-            progress.Report((1, "Cleaning Archives"));
-            CleanupArchives(exePath);
+            if (game == Util.Game.DarkSouls)
+                UnpackDarkSoulsPTDE(exePath, gameDir, progress);
 
             progress.Report((1, "Unpacking complete!"));
             return null;
         }
 
+        private static void UnpackDarkSoulsPTDE(string exePath, string gameDir, IProgress<(double value, string status)> progress)
+        {
+            progress.Report((0, "Grabbing missing BHDs"));
+            GetBHD(gameDir, progress);
 
+            if (!FormFileView.SelectedFiles.Any() || FormFileView.SelectedFiles.Contains(c4110Path))
+            {
+                progress.Report((0, "Creating c4110 file"));
+                CreateC4110(gameDir);
+            }
+
+            progress.Report((0, "Moving map tpf files"));
+            MoveTPFs(gameDir);
+
+            progress.Report((0, "Extracting bhd/bdt pairs"));
+            ExtractBHD(gameDir, progress);
+        }
 
         private static async Task<string> UnpackArchive(string gameDir, string archive, string key, int index, int total,
             BHD5.Game gameVersion, ArchiveDictionary archiveDictionary,
@@ -172,6 +169,9 @@ namespace UXM
             progress.Report(((index + 2.0) / (total + 2.0), $"Loading {archive}..."));
             string bhdPath = $@"{gameDir}\{archive}.bhd";
             string bdtPath = $@"{gameDir}\{archive}.bdt";
+
+            if (gameVersion == BHD5.Game.DarkSouls1)
+                bhdPath += "5";
 
             if (File.Exists(bhdPath) && File.Exists(bdtPath))
             {
@@ -231,6 +231,9 @@ namespace UXM
                                 bool unknown;
                                 if (archiveDictionary.GetPath(header.FileNameHash, out path))
                                 {
+                                    if (archive == @"sd\sd")
+                                        path = $"/sound/{path}";
+
                                     unknown = false;
                                     path = gameDir + path.Replace('/', '\\');
                                     if (File.Exists(path))
@@ -242,7 +245,7 @@ namespace UXM
                                         continue;
 
                                     unknown = true;
-                                    string filename = $"{archive}_{header.FileNameHash:D10}";
+                                    string filename = $"{archive.Split('\\')[0]}_{header.FileNameHash:D10}"; //sad :(
                                     string directory = $@"{gameDir}\_unknown";
                                     path = $@"{directory}\{filename}";
                                     if (File.Exists(path) || Directory.Exists(directory) && Directory.GetFiles(directory, $"{filename}.*").Length > 0)
@@ -297,6 +300,12 @@ namespace UXM
                                         else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DCX\0")
                                             path += ".dcx";
                                         br.Stream.Close();
+                                    }
+
+                                    if (gameVersion == BHD5.Game.DarkSouls1 && path.Contains(".dcx"))
+                                    {
+                                        bytes = DCX.Decompress(bytes, out DCX.Type compression);
+                                        path = path.Replace(".dcx", "");
                                     }
                                 }
                                 catch (Exception ex)
@@ -362,21 +371,29 @@ namespace UXM
 
             using (var bnd = new BND3Reader(sourceFile))
             {
-                bnd.Unpack(filename, targetDir, new Progress<float>());
+                bnd.Unpack(filename, targetDir, new Progress<float>(), true, true, true);
             }
-
         }
+
+        static string c4110Path = "/chr/c4110.chrtpfbhd";
         private static void CreateC4110(string gameDir)
         {
-            string path = $@"{gameDir}\chr\c4110.chrtpfbhd";
+            string path = $@"{gameDir}/{c4110Path}";
 
             File.WriteAllBytes(path, GameData.c4110);
         }
         private static void MoveTPFs(string gameDir)
         {
-            Directory.CreateDirectory($@"{gameDir}\map\tx");
             var tpfbdt = Directory.GetFiles(gameDir, "*.tpfbdt", SearchOption.AllDirectories);
             var tpfbhd = Directory.GetFiles(gameDir, "*.tpfbhd", SearchOption.AllDirectories);
+            if (tpfbdt.Length <= 0 && tpfbhd.Length <= 0)
+                return;
+
+            if (tpfbdt.Length != tpfbhd.Length)
+                throw new Exception($"Missing a bdt:{tpfbdt.Length} or bhd:{tpfbhd.Length}. " +
+                    $"These need to be paired evenly");
+
+            Directory.CreateDirectory($@"{gameDir}\map\tx");
             foreach (var file in tpfbdt)
             {
                 File.Move(file, $@"{gameDir}\map\tx\{Path.GetFileName(file)}");
@@ -403,7 +420,6 @@ namespace UXM
                 File.Delete(filePath);
                 File.Delete(bdt);
             }
-
         }
 
         public static void UnpackBHD(string sourceFile)
@@ -421,23 +437,12 @@ namespace UXM
             {
                 using (var bxf = new BXF3Reader(sourceFile, bdtPath))
                 {
-                    bxf.Unpack(filename, bdtFilename, targetDir, new Progress<float>());
+                    bxf.Unpack(filename, bdtFilename, targetDir, new Progress<float>(), true, true, true);
                 }
             }
             else
             {
                 //progress.Report($"BDT not found for BHD: {filename}");
-            }
-
-        }
-
-        private static void CleanupArchives(string installPath)
-        {
-            var archives = Directory.GetFiles(Path.GetDirectoryName(installPath), "dvdbnd*", SearchOption.TopDirectoryOnly);
-
-            foreach (var file in archives)
-            {
-                File.Delete(file);
             }
         }
 

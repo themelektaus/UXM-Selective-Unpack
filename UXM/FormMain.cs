@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Taskbar;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -87,14 +88,16 @@ namespace UXM
                 {
                     MessageBox.Show(ex.Message);
                     txtExePath.Text = settings.ExePath;
+                    return;
+                  
                 }
 
                 settings.ExePath = txtExePath.Text;
 
             });
-         
+
         }
-           
+
 
         private void llbUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -306,8 +309,9 @@ namespace UXM
             await Dispatcher.CurrentDispatcher.Invoke(async () =>
             {
                     await GetTreeView();
-                
+                   
             });
+       
         }
 
         public void SetSkip(bool enable)

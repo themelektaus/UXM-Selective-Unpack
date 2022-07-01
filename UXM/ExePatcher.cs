@@ -71,7 +71,7 @@ namespace UXM
                         return null;
 
                     string target = gameInfo.Replacements[i];
-                    string replacement = "." + new string('/', target.Length - 1);
+                    string replacement = game == Util.Game.DarkSouls ? gameInfo.Replace[i] : "." + new string('/', target.Length - 1);
 
                     // Add 1.0 for preparation step
                     progress.Report(((i + 1.0) / (gameInfo.Replacements.Count + 1.0), $"Patching alias \"{target}\" ({i + 1}/{gameInfo.Replacements.Count})..."));
@@ -100,10 +100,13 @@ namespace UXM
         private static void replace(byte[] bytes, string target, string replacement)
         {
             byte[] targetBytes = UTF16.GetBytes(target);
-            byte[] replacementBytes = UTF16.GetBytes(replacement);
-            if (targetBytes.Length != replacementBytes.Length)
+            byte[] replacementBytes = new byte[targetBytes.Length];
+            byte[] dummy = UTF16.GetBytes(replacement);
+
+            if (dummy.Length > targetBytes.Length)
                 throw new ArgumentException($"Target length: {targetBytes.Length} | Replacement length: {replacementBytes.Length}");
 
+            Array.Copy(dummy, replacementBytes, dummy.Length);
             List<int> offsets = findBytes(bytes, targetBytes);
             foreach (int offset in offsets)
                 Array.Copy(replacementBytes, 0, bytes, offset, replacementBytes.Length);

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <game_info>
 	<required_gb>16</required_gb>
-	<bhd5_game>DarkSouls</bhd5_game>
+	<bhd5_game>DarkSouls1</bhd5_game>
 	<archives>
 		<archive>dvdbnd0</archive>
 		<archive>dvdbnd1</archive>
@@ -13,19 +13,24 @@
 	</backup_dirs>
 	<delete_dirs>
 		<delete>_unknown</delete>
-		<delete>breakobj</delete>
-		<delete>decal</delete>
-		<delete>eventmakerex</delete>
-		<delete>ezstate</delete>
-		<delete>filter</delete>
+		<delete>chr</delete>
+		<delete>event</delete>
+		<delete>facegen</delete>
+		<delete>font</delete>
 		<delete>map</delete>
-		<delete>material</delete>
 		<delete>menu</delete>
-		<delete>model</delete>
-		<delete>model_hq</delete>
-		<delete>morpheme4</delete>
-		<delete>prefabeditor</delete>
-		<delete>timeact</delete>
+		<delete>msg</delete>
+		<delete>mtd</delete>
+		<delete>obj</delete>
+		<delete>other</delete>
+		<delete>param</delete>
+		<delete>paramdef</delete>
+		<delete>parts</delete>
+		<delete>remo</delete>
+		<delete>script</delete>
+		<delete>sfx</delete>
+		<delete>shader</delete>
+		<delete>sound</delete>
 	</delete_dirs>
 	<replacements>
 		<replacement>dvdbnd0:</replacement>
@@ -44,7 +49,7 @@
 		<replace>dvdroot:</replace>
 		<replace>maphkx:</replace>
 		<replace>map:/tx</replace>
-		<replace>chr\u0000\u0000</replace>
+		<replace>chr</replace>
 		<replace>ⅆ댠樒栄</replace>
 	</replace>
 </game_info>

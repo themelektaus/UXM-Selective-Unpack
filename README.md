@@ -34,7 +34,8 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
-### 1.72  
+### 2.0  
+* Added support for Dark Souls: PTDE.  
 * Added "support" for Dark Souls Remastered.  
 * Added auto detect steam library where Elden Ring is located.  
 

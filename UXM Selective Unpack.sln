@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UXM Selective Unpack", "UXM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "..\SoulsFormats\SoulsFormats\SoulsFormats.csproj", "{22C664BD-877B-44DF-8ECF-2808522469A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yabber", "Yabber\Yabber\Yabber.csproj", "{0406FE88-F044-4A16-994E-6E3C9715AC60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yabber", "Yabber-Class-Library\Yabber\Yabber.csproj", "{0406FE88-F044-4A16-994E-6E3C9715AC60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

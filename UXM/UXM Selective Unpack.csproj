@@ -152,8 +152,12 @@
     <Content Include="res\DarkSouls3GameInfo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\DarkSoulsDictionary.txt" />
-    <Content Include="res\DarkSoulsGameInfo.xml" />
+    <Content Include="res\DarkSoulsDictionary.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\DarkSoulsGameInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="res\EldenRingDictionary.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -186,7 +190,7 @@
       <Project>{22C664BD-877B-44DF-8ECF-2808522469A8}</Project>
       <Name>SoulsFormats</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yabber\Yabber\Yabber.csproj">
+    <ProjectReference Include="..\Yabber-Class-Library\Yabber\Yabber.csproj">
       <Project>{0406fe88-f044-4a16-994e-6e3c9715ac60}</Project>
       <Name>Yabber</Name>
     </ProjectReference>
