@@ -77,38 +77,35 @@ namespace UXM
             EldenRing
         }
 
+        static (string path, string value)[] _keyPaths = new (string path, string value)[]
+        {
+                (@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam", "SteamPath"),
+                (@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath"),
+                (@"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam", "InstallPath"),
+                (@"HKEY_CURRENT_USER\SOFTWARE\Wow6432Node\Valve\Steam", "SteamPath")
+        };
+
         public static string GetSteamPath(string gamePath)
         {
-            if (!gamePath.Contains("{0}"))
-                return gamePath;
+            //if (!gamePath.Contains("{0}"))
+            //    return gamePath;
 
-            string registryKey = @"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam";
-            string installPath = Registry.GetValue(registryKey, "SteamPath", null) as string;
+            string installPath = null;
 
-            if (installPath == null)
+            foreach ((string path, string value) item in _keyPaths)
             {
-                registryKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam";
-                installPath = Registry.GetValue(registryKey, "InstallPath", null) as string;
-            }
+                string registryKey = item.path;
+                installPath = (string)Registry.GetValue(registryKey, item.value, null);
 
-            if (installPath == null)
-            {
-                registryKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam";
-                installPath = Registry.GetValue(registryKey, "InstallPath", null) as string;
+                if (installPath != null)
+                    break;
             }
-
-            if (installPath == null)
-            {
-                registryKey = @"HKEY_CURRENT_USER\SOFTWARE\Wow6432Node\Valve\Steam";
-                installPath = Registry.GetValue(registryKey, "SteamPath", null) as string;
-            }
-
-            if (installPath == null)
+     
+            if (string.IsNullOrWhiteSpace(installPath))
                 return null;
 
             string[] libraryFolders = File.ReadAllLines($@"{installPath}/SteamApps/libraryfolders.vdf");
             char[] seperator = new char[] { '\t' };
-
 
             foreach (string line in libraryFolders)
             {
@@ -116,7 +113,7 @@ namespace UXM
                     continue;
 
                 string[] split = line.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
-                string libraryPath = string.Format(gamePath, split[1].Replace("\"", ""));
+                string libraryPath = string.Format(gamePath, split.FirstOrDefault(x=> x.ToLower().Contains("steam")).Replace("\"", ""));
 
                 if (File.Exists(libraryPath))
                     return libraryPath.Replace("\\\\","\\");

@@ -33,8 +33,6 @@ namespace UXM
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-            settings.ExePath = @"{0}\steamapps\common\ELDEN RING\Game\eldenring.exe";
-
             Text = $"UXM {Application.ProductVersion} Selective Unpacker";
             EnableControls(true);
 
