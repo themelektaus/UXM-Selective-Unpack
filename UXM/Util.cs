@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SoulsFormats;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,7 @@ namespace UXM
                     return Game.EldenRing;
                 default:
                     throw new ArgumentException($"Invalid executable name given: {filename}\r\n"
-                + "Executable file name is expected to be DarkSoulsII.exe, DarkSoulsIII.exe, sekiro.exe, or DigitalArtwork_MiniSoundtrack.exe.");
+                + "Executable file name is expected to be DARKSOULS.exe DarkSoulsII.exe, DarkSoulsIII.exe, sekiro.exe, or DigitalArtwork_MiniSoundtrack.exe.");
             }
         }
 
@@ -141,7 +142,64 @@ namespace UXM
                 }
             }
         }
+        public static string GetExtensions(byte[] bytes)
+        {
+            BinaryReaderEx br = new BinaryReaderEx(false, bytes);
+            if (bytes.Length >= 3 && br.GetASCII(0, 3) == "GFX")
+                return ".gfx";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "FSB5")
+                return ".fsb";
+            else if (bytes.Length >= 0x19 && br.GetASCII(0xC, 0xE) == "ITLIMITER_INFO")
+                return ".itl";
+            else if (bytes.Length >= 0x10 && br.GetASCII(8, 8) == "FEV FMT ")
+                return ".fev";
+            else if (bytes.Length >= 4 && br.GetASCII(1, 3) == "Lua")
+                return ".lua";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DDS ")
+                return ".dds";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "#BOM")
+                return ".txt";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BND4")
+            {
+                if (BND3.IsRead(bytes, out BND3 bnd3))
+                {
+                    return $"{GetBNDExtensions(bnd3)}.bnd";
+                }
+                else if (BND4.IsRead(bytes, out BND4 bnd4))
+                {
+                    return $"{GetBNDExtensions(bnd4)}.bnd";
+                }
+            }
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BHF4")
+                return ".bhd";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BDF4")
+                return".bdt";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "PSC ")
+                return ".pipelinestatecache";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "ENFL")
+                return ".entryfilelist";
+            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DCX\0")
+            {
+                byte[] decompressedBytes = DCX.Decompress(bytes);
+                string subextension = GetExtensions(decompressedBytes);
+                return $"{subextension}.dcx";
+            }
+            br.Stream.Close();
+            return ".unk";
+        }
 
+        private static string GetBNDExtensions(IBinder bnd)
+        {
+            List<string> extensions = new List<string>();
 
+            foreach (BinderFile file in bnd.Files)
+            {
+                string extension = Path.GetExtension(file.Name);
+                if (!extensions.Contains(extension))
+                    extensions.Add(extension);
+            }
+
+            return string.Join("", extensions);
+        }
     }
 }

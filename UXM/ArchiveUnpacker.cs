@@ -24,6 +24,7 @@ namespace UXM
 
         public static string Unpack(string exePath, IProgress<(double value, string status)> progress, CancellationToken ct)
         {
+
             progress.Report((0, "Preparing to unpack..."));
             string gameDir = Path.GetDirectoryName(exePath);
 
@@ -38,6 +39,8 @@ namespace UXM
             {
                 return ex.Message;
             }
+            if ((game == Util.Game.EldenRing || game == Util.Game.Sekiro) && !File.Exists("oo2core_6_win64.dll"))
+                File.Copy($"{gameDir}/oo2core_6_win64.dll", $"{Environment.CurrentDirectory}/oo2core_6_win64.dll");
 
             if (FormFileView.SelectedFiles.Any() && Skip)
                 gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles), game);
@@ -276,30 +279,7 @@ namespace UXM
                                     bytes = header.ReadFile(bdtStream);
                                     if (unknown)
                                     {
-                                        BinaryReaderEx br = new BinaryReaderEx(false, bytes);
-                                        if (bytes.Length >= 3 && br.GetASCII(0, 3) == "GFX")
-                                            path += ".gfx";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "FSB5")
-                                            path += ".fsb";
-                                        else if (bytes.Length >= 0x19 && br.GetASCII(0xC, 0xE) == "ITLIMITER_INFO")
-                                            path += ".itl";
-                                        else if (bytes.Length >= 0x10 && br.GetASCII(8, 8) == "FEV FMT ")
-                                            path += ".fev";
-                                        else if (bytes.Length >= 4 && br.GetASCII(1, 3) == "Lua")
-                                            path += ".lua";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DDS ")
-                                            path += ".dds";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "#BOM")
-                                            path += ".txt";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BHF4")
-                                            path += ".bhd";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BDF4")
-                                            path += ".bdt";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "ENFL")
-                                            path += ".entryfilelist";
-                                        else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DCX\0")
-                                            path += ".dcx";
-                                        br.Stream.Close();
+                                        path += Util.GetExtensions(bytes);
                                     }
 
                                     if (gameVersion == BHD5.Game.DarkSouls1 && path.Contains(".dcx"))
@@ -338,7 +318,7 @@ namespace UXM
 
             return null;
         }
-
+       
         private static async Task<long> WriteFileAsync(string path, byte[] bytes)
         {
             using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))

@@ -34,6 +34,16 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1
+* Added better support for file extensions in `_unknown`. Underlying extension for .DCX'd files and extensions inside bnds    
+* Added two missing aeg files to the list and 4 missing .entryfilelist:  
+	+/asset/aet/aet500/aet500_813.tpf.dcx  
+	+/asset/aet/aet500/aet500_813_l.tpf.dcx  
+	+/map/entryfilelist/e001105/i0011050063.entryfilelist  
+	+/map/entryfilelist/e001201/e0012010971.entryfilelist  
+	+/map/entryfilelist/e001202/e0012022202.entryfilelist  
+	+/map/entryfilelist/e001202/e0012022209.entryfilelist  
+
 ### 2.0  
 * Added support for Dark Souls: PTDE.  
 * Added "support" for Dark Souls Remastered.  

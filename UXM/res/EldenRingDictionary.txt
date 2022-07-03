@@ -42246,6 +42246,8 @@
 /asset/aet/aet270/aet270_900_l.tpf.dcx
 /asset/aet/aet301/aet301_020.tpf.dcx
 /asset/aet/aet301/aet301_020_l.tpf.dcx
+/asset/aet/aet500/aet500_813.tpf.dcx
+/asset/aet/aet500/aet500_813_l.tpf.dcx
 /asset/aet/aet500/aet500_833.tpf.dcx
 /asset/aet/aet500/aet500_833_l.tpf.dcx
 /asset/aet/aet501/aet501_109.tpf.dcx
@@ -43680,9 +43682,13 @@
 /map/breakgeom/lod2/m60_57_60_00_lod2.breakgeom.dcx
 /map/breakgeom/lod2/m60_57_61_00_lod2.breakgeom.dcx
 /map/entryfilelist/e001001/e0010012100.entryfilelist
+/map/entryfilelist/e001105/i0011050063.entryfilelist
 /map/entryfilelist/e001100/e0011000986.entryfilelist
 /map/entryfilelist/e001201/e0012011970.entryfilelist
 /map/entryfilelist/e001201/i0012010111.entryfilelist
+/map/entryfilelist/e001201/e0012010971.entryfilelist
+/map/entryfilelist/e001202/e0012022202.entryfilelist
+/map/entryfilelist/e001202/e0012022209.entryfilelist
 /map/entryfilelist/e001208/e0012080400.entryfilelist
 /map/entryfilelist/e001300/e0013002505.entryfilelist
 /map/entryfilelist/e001300/e0013002835.entryfilelist
