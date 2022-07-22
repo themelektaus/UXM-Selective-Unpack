@@ -34,6 +34,12 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.1
+* Bugfix for Sekiro unpacking. It should now work properly  
+* Minor bugfix that would propt the user with an exception if they didn't have Elden Ring installed.  
+* Added old file for backwards compatability:  
+	+/enus/wem/84/846437564.wem  
+
 ### 2.1
 * Added better support for file extensions in `_unknown`. Underlying extension for .DCX'd files and extensions inside bnds    
 * Added two missing aeg files to the list and 4 missing .entryfilelist:  

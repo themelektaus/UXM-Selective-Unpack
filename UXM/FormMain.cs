@@ -306,10 +306,12 @@ namespace UXM
 
         private async void txtExePath_TextChanged(object sender, EventArgs e)
         {
+            if (!Path.IsPathRooted(txtExePath.Text))
+                return;
+
             await Dispatcher.CurrentDispatcher.Invoke(async () =>
             {
                     await GetTreeView();
-                   
             });
        
         }

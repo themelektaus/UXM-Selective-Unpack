@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Xml.Linq;
 
 namespace UXM
@@ -33,10 +34,6 @@ namespace UXM
             if (game == Util.Game.DarkSouls)
             {
                 Replace = xml.Root.Element("replace").Elements().Select(element => element.Value).ToList();
-                //for (int i = 0; i < Replace.Count; i++)
-                //{
-                //    Replace[i] = Replace[i].Replace("\\\\", "\\");
-                //}
             }
         }
 

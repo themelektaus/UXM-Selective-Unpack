@@ -37,7 +37,8 @@ namespace UXM
             }
             catch (Exception ex)
             {
-                return ex.Message;
+
+                return $"Error getting game info: {ex.Message} {ex.StackTrace}";
             }
             if ((game == Util.Game.EldenRing || game == Util.Game.Sekiro) && !File.Exists("oo2core_6_win64.dll"))
                 File.Copy($"{gameDir}/oo2core_6_win64.dll", $"{Environment.CurrentDirectory}/oo2core_6_win64.dll");

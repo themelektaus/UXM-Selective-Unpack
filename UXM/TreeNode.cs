@@ -14,14 +14,10 @@ namespace UXM
     {
         public ObservableCollection<TreeNode> Nodes { get; set; }
         public string Name { get; set; }
-        public override string ToString()
-        {
-            return Name;
-        }
         public TreeNode Parent { get; }
         public string FullPath => $"{Parent?.FullPath}/{Name}";
 
-        private bool _visibility = true;
+        private bool _visibility;
         public bool Visibility
         {
             get => _visibility;
@@ -65,19 +61,6 @@ namespace UXM
             Nodes = new ObservableCollection<TreeNode>();
         }
 
-        private string _itemFilter = "";
-        public string ItemFilter
-        {
-            get => _itemFilter;
-            set
-            {
-                if (SetField(ref _itemFilter, value))
-                {
-                    //Nodes.Refresh();
-                }
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         // This method is called by the Set accessor of each property.
@@ -85,10 +68,7 @@ namespace UXM
         // parameter causes the property name of the caller to be substituted as an argument.
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -97,12 +77,6 @@ namespace UXM
             field = value;
             OnPropertyChanged(propertyName ?? "");
             return true;
-        }
-
-        private void FileView_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(FileView.ItemFilter))
-                ItemFilter = (sender as FileView).ItemFilter;
         }
 
         public TreeNode this[string s]
@@ -129,13 +103,17 @@ namespace UXM
             return false;
         }
 
-        public bool UnselectedChildren()
+        public bool HasUnselectedChildren()
         {
             foreach (TreeNode node in Nodes)
             {
-                return node.Selected && node.UnselectedChildren();
+                return node.Selected && node.HasUnselectedChildren();
             }
             return false;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
