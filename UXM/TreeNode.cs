@@ -17,7 +17,7 @@ namespace UXM
         public TreeNode Parent { get; }
         public string FullPath => $"{Parent?.FullPath}/{Name}";
 
-        private bool _visibility;
+        private bool _visibility = true;
         public bool Visibility
         {
             get => _visibility;

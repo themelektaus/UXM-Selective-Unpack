@@ -34,6 +34,11 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.2
+* Finally named the FileFormView window.  
+* Fixed a bug where the files were invisible until you tried to search.  
+
+
 ### 2.1.1
 * Bugfix for Sekiro unpacking. It should now work properly  
 * Minor bugfix that would propt the user with an exception if they didn't have Elden Ring installed.  

@@ -50,7 +50,7 @@ namespace UXM
             this.ClientSize = new System.Drawing.Size(819, 515);
             this.Controls.Add(this.elementHost1);
             this.Name = "FormFileView";
-            this.Text = "FormFileView";
+            this.Text = "Select Files";
             this.ResumeLayout(false);
 
         }
