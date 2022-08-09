@@ -34,6 +34,30 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.3  
+* Added 21 new files from 1.06 patch 
+	+/map/m10/m10_00_00_00/m10_00_00_00_910021.mapbnd.dcx
+	+/map/m60/m60_08_12_02/m60_08_12_02_32355002.mapbnd.dcx
+	+/map/m60/m60_09_13_02/m60_09_13_02_76395404.mapbnd.dcx
+	+/map/m60/m60_13_10_02/m60_13_10_02_41524102.mapbnd.dcx
+	+/map/m60/m60_17_25_01/m60_17_25_01_32355002.mapbnd.dcx
+	+/map/m60/m60_19_27_01/m60_19_27_01_76395404.mapbnd.dcx
+	+/map/m60/m60_26_20_01/m60_26_20_01_41524102.mapbnd.dcx
+	+/map/m60/m60_35_50_00/m60_35_50_00_355002.mapbnd.dcx
+	+/map/m60/m60_39_54_00/m60_39_54_00_395404.mapbnd.dcx
+	+/map/m60/m60_51_57_00/m60_51_57_00_515704.mapbnd.dcx
+	+/map/m60/m60_52_41_00/m60_52_41_00_524102.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910015.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910016.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910017.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910018.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910019.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910020.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910022.mapbnd.dcx
+	+/map/m10/m10_00_00_00/m10_00_00_00_910023.mapbnd.dcx
+	+/map/m60/m60_12_14_02/m60_12_14_02_31515704.mapbnd.dcx
+	+/map/m60/m60_25_28_01/m60_25_28_01_31515704.mapbnd.dcx
+
 ### 2.1.2
 * Finally named the FileFormView window.  
 * Fixed a bug where the files were invisible until you tried to search.  
