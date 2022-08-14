@@ -23,7 +23,6 @@ namespace UXM
 
         public GameInfo(string xmlStr, string dictionaryStr, Util.Game game)
         {
-            Dictionary = new ArchiveDictionary(dictionaryStr, game);
             XDocument xml = XDocument.Parse(xmlStr);
             RequiredGB = long.Parse(xml.Root.Element("required_gb").Value);
             BHD5Game = (BHD5.Game)Enum.Parse(typeof(BHD5.Game), xml.Root.Element("bhd5_game").Value);
@@ -31,6 +30,7 @@ namespace UXM
             BackupDirs = xml.Root.Element("backup_dirs").Elements().Select(element => element.Value).ToList();
             DeleteDirs = xml.Root.Element("delete_dirs").Elements().Select(element => element.Value).ToList();
             Replacements = xml.Root.Element("replacements").Elements().Select(element => element.Value).ToList();
+            Dictionary = new ArchiveDictionary(dictionaryStr, BHD5Game);
             if (game == Util.Game.DarkSouls)
             {
                 Replace = xml.Root.Element("replace").Elements().Select(element => element.Value).ToList();
