@@ -38,15 +38,13 @@ namespace UXM
                             {
                                 return Game.DarkSouls2;
                             }
-                            else if (architecture == 0x8664)
+
+                            if (architecture == 0x8664)
                             {
                                 return Game.Scholar;
                             }
-                            else
-                            {
-                                throw new InvalidDataException("Could not determine version of DarkSoulsII.exe.\r\n"
-                                    + $"Unknown architecture found: 0x{architecture:X4}");
-                            }
+                            throw new InvalidDataException("Could not determine version of DarkSoulsII.exe.\r\n"
+                                                           + $"Unknown architecture found: 0x{architecture:X4}");
                         }
                     }
 
@@ -147,49 +145,55 @@ namespace UXM
             BinaryReaderEx br = new BinaryReaderEx(false, bytes);
             if (bytes.Length >= 3 && br.GetASCII(0, 3) == "GFX")
                 return ".gfx";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "FSB5")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "FSB5")
                 return ".fsb";
-            else if (bytes.Length >= 0x19 && br.GetASCII(0xC, 0xE) == "ITLIMITER_INFO")
+            if (bytes.Length >= 0x19 && br.GetASCII(0xC, 0xE) == "ITLIMITER_INFO")
                 return ".itl";
-            else if (bytes.Length >= 0x10 && br.GetASCII(8, 8) == "FEV FMT ")
+            if (bytes.Length >= 0x10 && br.GetASCII(8, 8) == "FEV FMT ")
                 return ".fev";
-            else if (bytes.Length >= 4 && br.GetASCII(1, 3) == "Lua")
+            if (bytes.Length >= 4 && br.GetASCII(1, 3) == "Lua")
                 return ".lua";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DDS ")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DDS ")
                 return ".dds";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "#BOM")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "#BOM")
                 return ".txt";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BND4")
-            {
-                if (BND3.IsRead(bytes, out BND3 bnd3))
-                {
-                    return $"{GetBNDExtensions(bnd3)}.bnd";
-                }
-                else if (BND4.IsRead(bytes, out BND4 bnd4))
-                {
-                    return $"{GetBNDExtensions(bnd4)}.bnd";
-                }
-            }
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BHF4")
+            if (BND3.IsRead(bytes, out BND3 bnd3))
+                return $"{GetBNDExtensions(bnd3)}.bnd";
+            if (BND4.IsRead(bytes, out BND4 bnd4))
+                return $"{GetBNDExtensions(bnd4)}.bnd";
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BHF4")
                 return ".bhd";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BDF4")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "BDF4")
                 return".bdt";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "PSC ")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "PSC ")
                 return ".pipelinestatecache";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "ENFL")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "ENFL")
                 return ".entryfilelist";
-            else if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DCX\0")
+            if (bytes.Length >= 4 && br.GetASCII(0, 4) == "DCX\0")
             {
-                byte[] decompressedBytes = DCX.Decompress(bytes);
-                string subextension = GetExtensions(decompressedBytes);
+                string subextension = "";
+                try
+                {
+                    byte[] decompressedBytes = DCX.Decompress(bytes);
+                    subextension = GetExtensions(decompressedBytes);
+                }
+                catch (EndOfStreamException)
+                {
+                    subextension = ".yabber-failed-to-read";
+                }
+         
                 return $"{subextension}.dcx";
             }
+
             br.Stream.Close();
             return ".unk";
         }
 
         private static string GetBNDExtensions(IBinder bnd)
         {
+            if (bnd.Files.Count == 1)
+                return $"-{Path.GetFileName(bnd.Files[0].Name)}";
+
             List<string> extensions = new List<string>();
 
             foreach (BinderFile file in bnd.Files)
@@ -200,6 +204,26 @@ namespace UXM
             }
 
             return string.Join("", extensions);
+        }
+
+        public static BHD5.Game GetBHD5Game(Game game)
+        {
+            switch (game)
+            {
+                case Game.DarkSouls:
+                    return BHD5.Game.DarkSouls1;
+                case Game.DarkSouls2:
+                case Game.Scholar:
+                    return BHD5.Game.DarkSouls2;
+                case Game.DarkSouls3:
+                case Game.Sekiro:
+                case Game.SekiroBonus:
+                    return BHD5.Game.DarkSouls3;
+                case Game.EldenRing:
+                    return BHD5.Game.EldenRing;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(game), game, "Game does not have a BHD5.Game enum value");
+            }
         }
     }
 }

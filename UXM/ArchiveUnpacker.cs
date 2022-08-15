@@ -44,7 +44,7 @@ namespace UXM
                 File.Copy($"{gameDir}/oo2core_6_win64.dll", $"{Environment.CurrentDirectory}/oo2core_6_win64.dll");
 
             if (FormFileView.SelectedFiles.Any() && Skip)
-                gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles), game);
+                gameInfo.Dictionary = new ArchiveDictionary(string.Join("\n", FormFileView.SelectedFiles), Util.GetBHD5Game(game));
 
             Dictionary<string, string> keys = null;
             if (game == Util.Game.DarkSouls2 || game == Util.Game.Scholar)

@@ -34,6 +34,9 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.4  
+* Fixed Sekiro error on unpacking unknown files
+
 ### 2.1.3  
 * Added 21 new files from 1.06 patch 
 	+/map/m10/m10_00_00_00/m10_00_00_00_910021.mapbnd.dcx  
