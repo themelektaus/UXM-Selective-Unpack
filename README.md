@@ -34,6 +34,13 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.5
+* Added new Elden Ring files to Dictionary. Use git change log to see new files (There are a lot!)  
+* fixed and issue where files that fail to decode crash the unpacker.  
+
+### 2.1.5
+* Fixed an issue with Sekiro GOTY Edition unpacking    
+
 ### 2.1.4  
 * Fixed Sekiro error on unpacking unknown files
 
