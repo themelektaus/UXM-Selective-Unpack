@@ -35,7 +35,7 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 
 # Changelog  
 ### 2.1.5
-* Added new Elden Ring files to Dictionary. Use git change log to see new files (There are a lot!)  
+* Added new Elden Ring files to Dictionary. Thank you [Sekiro Dubi](https://github.com/sekirodubi) for patching the EldenRingDictionary! [New files](https://gist.github.com/Nordgaren/ad767bbcc02b5c9b10e38c336c64dcdd) 
 * fixed and issue where files that fail to decode crash the unpacker.  
 
 ### 2.1.5
