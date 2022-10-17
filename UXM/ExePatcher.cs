@@ -7,6 +7,10 @@ using System.Windows.Forms;
 
 namespace UXM
 {
+    public static class Utillol {
+
+    }
+
     class ExePatcher
     {
         private static readonly Encoding UTF16 = Encoding.Unicode;

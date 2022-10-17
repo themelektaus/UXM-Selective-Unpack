@@ -34,8 +34,8 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
-### 2.1.5
-* Added new Elden Ring files to Dictionary. Thank you [Sekiro Dubi](https://github.com/sekirodubi) for patching the EldenRingDictionary! [New files](https://gist.github.com/Nordgaren/ad767bbcc02b5c9b10e38c336c64dcdd) 
+### 2.1.6
+* Added new Elden Ring files to Dictionary. Thank you EvilCookie for patching the EldenRingDictionary! [New files](https://gist.github.com/Nordgaren/ad767bbcc02b5c9b10e38c336c64dcdd) 
 * fixed and issue where files that fail to decode crash the unpacker.  
 
 ### 2.1.5
