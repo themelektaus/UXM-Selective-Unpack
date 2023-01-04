@@ -103,7 +103,7 @@ namespace UXM
             if (paths == null)
                 return null;
 
-            TreeNode thisnode = new TreeNode(null, prefix);
+            TreeNode thisnode = new TreeNode(null, prefix, false);
             TreeNode currentnode;
             char[] cachedpathseparator = pathSeparator.ToCharArray();
             bool sound = false;
@@ -124,7 +124,7 @@ namespace UXM
                 foreach (string subPath in newPath.Split(cachedpathseparator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (currentnode[subPath] == null)
-                        currentnode.Nodes.Add(new TreeNode(currentnode, subPath));
+                        currentnode.Nodes.Add(new TreeNode(currentnode, subPath, sound));
 
                     currentnode = currentnode[subPath];
                 }

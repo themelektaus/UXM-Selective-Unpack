@@ -48,8 +48,13 @@ namespace UXM
             {
                 if (node.Nodes.Count > 0)
                     AddSelectedFiles(node.Nodes.ToList());
-                else
-                    if (node.Selected) SelectedFiles.Add(node.FullPath.Replace($"{FileView.Prefix}/", ""));
+                else if (node.Selected)
+                {
+                    string path = node.FullPath.Replace($"{FileView.Prefix}/", "");
+                    if (node.IsSound)
+                        path = path.Replace($"{FileView.Prefix}/", "").Replace("/sound/", "");
+                    SelectedFiles.Add(path); // :fatcat:
+                }
             }
         }
 

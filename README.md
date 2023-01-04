@@ -34,6 +34,14 @@ You cannot play online with an modified exe, so you cannot go online with an unp
 [Semver](https://github.com/maxhauser/semver) by Max Hauser  
 
 # Changelog  
+### 2.1.7.1
+* re-fixed sekiro unpacking. Whoops!  
+
+### 2.1.7
+* Fixed the handling of the sound directory when it comes to selective unpacking.  
+
+* Improved the handling of invalid/non UXM games (including DSR) when the program first opens.  
+
 ### 2.1.6.1
 * Added new Elden Ring files to Dictionary. Thank you SekiroDubi for patching the EldenRingDictionary! [New files](https://gist.github.com/Nordgaren/af3c4e42c06495a8439e05d5fa6b1928)
 

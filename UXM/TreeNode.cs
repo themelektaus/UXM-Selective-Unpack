@@ -16,6 +16,7 @@ namespace UXM
         public string Name { get; set; }
         public TreeNode Parent { get; }
         public string FullPath => $"{Parent?.FullPath}/{Name}";
+        public bool IsSound { get; set; }
 
         private bool _visibility = true;
         public bool Visibility
@@ -54,11 +55,12 @@ namespace UXM
             _correcting = false;
         }
 
-        public TreeNode(TreeNode parent, string name)
+        public TreeNode(TreeNode parent, string name, bool isSound)
         {
             Parent = parent;
             Name = name;
             Nodes = new ObservableCollection<TreeNode>();
+            IsSound = isSound;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -87,6 +87,7 @@
     <Compile Include="Converters\BoolToVisibiltyConverter.cs" />
     <Compile Include="Converters\StringToVisbilityConverter.cs" />
     <Compile Include="CryptographyUtility.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="ExePatcher.cs" />
     <Compile Include="FormFileView.cs">
       <SubType>Form</SubType>
