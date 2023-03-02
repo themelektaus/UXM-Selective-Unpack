@@ -7,6 +7,8 @@ namespace UXM
 {
     static class Program
     {
+        public static bool unattended { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -21,13 +23,13 @@ namespace UXM
                 settings.Save();
             }
 
-            var unattended = args.Length == 1;
+            unattended = args.Length == 1;
             if (unattended)
                 settings.ExePath = args[0];
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain(unattended));
+            Application.Run(new FormMain());
 
             if (unattended)
                 return;

@@ -18,16 +18,12 @@ namespace UXM
         private const string UPDATE_LINK = "https://www.nexusmods.com/sekiro/mods/26?tab=files";
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        bool unattended;
-
         private bool closing;
         private CancellationTokenSource cts;
         private IProgress<(double value, string status)> progress;
 
-        public FormMain(bool unattended = false)
+        public FormMain()
         {
-            this.unattended = unattended;
-
             InitializeComponent();
 
             closing = false;
@@ -46,6 +42,15 @@ namespace UXM
                 Size = settings.WindowSize;
             if (settings.WindowMaximized)
                 WindowState = FormWindowState.Maximized;
+
+            if (Program.unattended)
+            {
+                MinimizeBox = false;
+                MaximizeBox = false;
+                TopMost = true;
+                TopLevel = true;
+                CenterToScreen();
+            }
 
             string installPath = Util.TryGetGameInstallLocation(settings.ExePath);
             if (!string.IsNullOrEmpty(installPath))
@@ -75,7 +80,7 @@ namespace UXM
                 lblUpdate.Text = "Update status unknown";
             }
 
-            if (!unattended)
+            if (!Program.unattended)
                 return;
 
             await btnUnpack_Click(this, EventArgs.Empty);
@@ -119,10 +124,13 @@ namespace UXM
         {
             if (cts != null)
             {
-                txtStatus.Text = "Aborting...";
-                closing = true;
-                btnAbort.Enabled = false;
-                cts.Cancel();
+                if (!Program.unattended)
+                {
+                    txtStatus.Text = "Aborting...";
+                    closing = true;
+                    btnAbort.Enabled = false;
+                    cts.Cancel();
+                }
                 e.Cancel = true;
             }
             else
@@ -271,10 +279,14 @@ namespace UXM
         {
             txtExePath.Enabled = enable;
             btnBrowse.Enabled = enable;
-            btnAbort.Enabled = !enable;
+            btnAbort.Enabled = !Program.unattended && !enable;
             btnRestore.Enabled = enable;
             btnPatch.Enabled = enable;
             btnUnpack.Enabled = enable;
+            
+            btnExplore.Enabled = !Program.unattended;
+            btnFileView.Enabled = !Program.unattended;
+            cbxSkip.Enabled = !Program.unattended;
         }
 
         private void ReportProgress((double value, string status) report)
