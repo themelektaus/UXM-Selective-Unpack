@@ -188,7 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SoulsFormats\SoulsFormats\SoulsFormats.csproj">
-      <Project>{22C664BD-877B-44DF-8ECF-2808522469A8}</Project>
+      <Project>{22c664bd-877b-44df-8ecf-2808522469a8}</Project>
       <Name>SoulsFormats</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yabber-Class-Library\Yabber\Yabber.csproj">

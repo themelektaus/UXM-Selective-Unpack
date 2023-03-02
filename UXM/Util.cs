@@ -135,7 +135,8 @@ namespace UXM {
         public static string GetExtensions(byte[] bytes) {
 
             try {
-                using (BinaryReaderEx br = new BinaryReaderEx(false, bytes)) {
+                BinaryReaderEx br = new BinaryReaderEx(false, bytes);
+                {
                     if (bytes.Length >= 3 && br.GetASCII(0, 3) == "GFX")
                         return ".gfx";
                     if (bytes.Length >= 4 && br.GetASCII(0, 4) == "FSB5")
@@ -172,6 +173,7 @@ namespace UXM {
                         return $"{GetExtensions(decompressedBytes)}.dcx";
                     }
                 }
+                br.Stream.Dispose();
             }
             catch (EndOfStreamException) {
                 return $"failed-to-read.dcx";

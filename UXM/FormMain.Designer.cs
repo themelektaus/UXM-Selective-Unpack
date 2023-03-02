@@ -94,7 +94,7 @@
             this.btnPatch.TabIndex = 27;
             this.btnPatch.Text = "Patch";
             this.btnPatch.UseVisualStyleBackColor = true;
-            this.btnPatch.Click += new System.EventHandler(this.btnPatch_Click);
+            this.btnPatch.Click += new System.EventHandler(async (sender, e) => await btnPatch_Click(sender, e));
             // 
             // btnUnpack
             // 
@@ -106,7 +106,7 @@
             this.btnUnpack.TabIndex = 26;
             this.btnUnpack.Text = "Unpack";
             this.btnUnpack.UseVisualStyleBackColor = true;
-            this.btnUnpack.Click += new System.EventHandler(this.btnUnpack_Click);
+            this.btnPatch.Click += new System.EventHandler(async (sender, e) => await btnUnpack_Click(sender, e));
             // 
             // btnRestore
             // 

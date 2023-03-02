@@ -18,12 +18,16 @@ namespace UXM
         private const string UPDATE_LINK = "https://www.nexusmods.com/sekiro/mods/26?tab=files";
         private static Properties.Settings settings = Properties.Settings.Default;
 
+        bool unattended;
+
         private bool closing;
         private CancellationTokenSource cts;
         private IProgress<(double value, string status)> progress;
 
-        public FormMain()
+        public FormMain(bool unattended = false)
         {
+            this.unattended = unattended;
+
             InitializeComponent();
 
             closing = false;
@@ -70,6 +74,13 @@ namespace UXM
             {
                 lblUpdate.Text = "Update status unknown";
             }
+
+            if (!unattended)
+                return;
+
+            await btnUnpack_Click(this, EventArgs.Empty);
+            await btnPatch_Click(this, EventArgs.Empty);
+            Close();
         }
 
         public async Task GetTreeView()
@@ -162,7 +173,7 @@ namespace UXM
                 SystemSounds.Hand.Play();
         }
 
-        private async void btnPatch_Click(object sender, EventArgs e)
+        private async Task btnPatch_Click(object sender, EventArgs e)
         {
             EnableControls(false);
             cts = new CancellationTokenSource();
@@ -223,7 +234,7 @@ namespace UXM
                 Close();
         }
 
-        private async void btnUnpack_Click(object sender, EventArgs e)
+        private async Task btnUnpack_Click(object sender, EventArgs e)
         {
             EnableControls(false);
             cts = new CancellationTokenSource();
