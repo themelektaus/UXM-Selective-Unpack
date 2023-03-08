@@ -31,7 +31,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Build\UXM Selective Unpack\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -216,17 +216,8 @@
       $(PostBuildEventDependsOn);
       PostBuildMacros;
     </PostBuildEventDependsOn>
-    <PostBuildEvent>set "output=$(TargetDir)UXM Selective Unpack @(VersionNumber)"
-if "$(ConfigurationName)" == "Release" (
-  md "%25output%25"
-  del "%25output%25"
-  xcopy "$(ProjectDir)res\*.*" "%25output%25/res" /Y /I /E
-  copy "$(SolutionDir)\README.md" "%25output%25\" 
-  ren "%25output%25\README.md" "README.txt"  
-  copy "$(TargetPath)" "%25output%25\"
-  copy "$(TargetPath).config" "%25output%25\"
-  copy "$(TargetDir)$(TargetName).pdb" "%25output%25\"
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
